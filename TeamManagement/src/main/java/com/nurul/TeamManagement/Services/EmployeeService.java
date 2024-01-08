@@ -1,17 +1,17 @@
-package com.TeamPlus.Services;
+package com.nurul.TeamManagement.Services;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import com.nurul.TeamManagement.Dao.EmployeeDao;
+import com.nurul.TeamManagement.Entity.Employee;
 
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.TeamPlus.Entity.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.TeamPlus.Dao.EmployeeDao;
 
 @Service
 public class EmployeeService {

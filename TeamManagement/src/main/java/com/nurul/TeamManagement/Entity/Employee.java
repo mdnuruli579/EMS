@@ -1,7 +1,7 @@
-package com.TeamPlus.Entity;
+package com.nurul.TeamManagement.Entity;
 
 import java.sql.Date;
-
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -16,28 +16,28 @@ public class Employee {
 	@Column(name = "ID", unique = true)
 	Integer id;
 	
-	@Column(name = "FirstName")
+	@Column(name = "First_Name")
 	String firstName;
 	
-	@Column(name = "LastName")
+	@Column(name = "Last_Name")
 	String lastName;
 	
-	@Column(name = "DateOfBirth")
+	@Column(name = "Date_Of_Birth",nullable = false)
 	Date dob;
 	
 	@Column(name = "Gender")
 	String gender;
 	
-	@Column(name = "PhoneNumber")
+	@Column(name = "Phone_Number",nullable = false)
 	String phnNumber;
 	
-	@Column(name = "Email",unique = true)
+	@Column(name = "Email",nullable = false,unique = true)
 	String email;
 	
-	@Column(name = "HireDate")
+	@Column(name = "Hire_Date",nullable = false)
 	Date hireDate;
 	
-	@Column(name = "JobTitle")
+	@Column(name = "Job_Title",nullable = false)
 	String jobTitle;
 	
 	@Column(name = "DepartmentID")
@@ -52,24 +52,23 @@ public class Employee {
 	@Column(name = "ManagerID")
 	Integer managerId;
 	
-	@Column(name = "EmploymentStatus")
+	@Column(name = "Employment_Status")
 	String empStatus;
 	
-	@Column(name = "EmergencyContactName")
+	@Column(name = "Emergency_Contact_Name")
 	String emergencyContactName;
 	
-	@Column(name = "EmergencyContactRelationship")
+	@Column(name = "Emergency_Contact_Relationship")
 	String emergencyContactRelationship;
 	
-	@Column(name = "EmergencyContactPhoneNumber")
+	@Column(name = "Emergency_Contact_PhoneNumber")
 	String emergencyContactPhoneNumber;
 	
 	@Column(name = "PhotoURL")
 	String photoURL;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CreateTime")
-	Date createTime;
+	@Column(name = "Create_Time")
+	LocalDate createTime;
 
 	public Integer getId() {
 		return id;
@@ -215,12 +214,12 @@ public class Employee {
 		this.photoURL = photoURL;
 	}
 
-	public Date getCreateTime() {
+	public LocalDate getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(java.util.Date date) {
-		this.createTime = (Date) date;
+	public void setCreateTime(LocalDate date) {
+		this.createTime =  date;
 	}
 	
 	

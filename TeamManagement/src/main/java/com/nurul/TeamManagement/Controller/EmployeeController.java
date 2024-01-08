@@ -1,7 +1,5 @@
-package com.TeamPlus.Controller;
-import com.TeamPlus.Entity.*;
-import com.TeamPlus.Services.EmployeeService;
-
+package com.nurul.TeamManagement.Controller;
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("employee")
+import com.nurul.TeamManagement.Entity.Employee;
+import com.nurul.TeamManagement.Services.EmployeeService;
+
+@RestController
+@RequestMapping("/employee")
 public class EmployeeController {
 	
 	@Autowired
@@ -50,6 +54,7 @@ public class EmployeeController {
 	public ResponseEntity<String> AddEmployee(@RequestBody Employee employee) {
 			
 			try {
+				employee.setCreateTime(LocalDate.now());
 				employeeService.save(employee);
 			}
 			catch(Exception e) {
@@ -109,7 +114,7 @@ public class EmployeeController {
 				employee.setHireDate(newEmployee.getHireDate());
 			if(newEmployee.getManagerId()!=null)
 				employee.setManagerId(newEmployee.getManagerId());
-			employee.setCreateTime(new Date());
+			employee.setCreateTime(LocalDate.now());
 		}
 		catch(Exception e){
 			return new ResponseEntity<Employee>(employee,HttpStatus.INTERNAL_SERVER_ERROR);

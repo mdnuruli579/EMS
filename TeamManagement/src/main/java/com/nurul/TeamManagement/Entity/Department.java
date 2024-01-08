@@ -1,4 +1,4 @@
-package com.TeamPlus.Entity;
+package com.nurul.TeamManagement.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

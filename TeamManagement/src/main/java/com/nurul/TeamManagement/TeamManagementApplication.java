@@ -1,13 +1,13 @@
-package com.TeamPlus;
+package com.nurul.TeamManagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TeamPlusApplication {
+public class TeamManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TeamPlusApplication.class, args);
+		SpringApplication.run(TeamManagementApplication.class, args);
 	}
 
 }

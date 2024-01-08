@@ -1,8 +1,8 @@
-package com.TeamPlus.Dao;
+package com.nurul.TeamManagement.Dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.TeamPlus.Entity.Employee;
+import com.nurul.TeamManagement.Entity.Employee;
 
 import java.util.List;
 import java.util.Optional;
