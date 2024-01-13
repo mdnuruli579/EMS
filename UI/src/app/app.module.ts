@@ -11,6 +11,8 @@ import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { DepartmentComponent } from './components/department/department.component';
 import { ManagerComponent } from './components/manager/manager.component';
+import { EmployeeService } from './service/employee/employee.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         AppComponent,
@@ -20,7 +22,7 @@ import { ManagerComponent } from './components/manager/manager.component';
         DepartmentComponent,
         ManagerComponent,
     ],
-    providers: [],
+    providers: [EmployeeService],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
@@ -29,6 +31,7 @@ import { ManagerComponent } from './components/manager/manager.component';
         MatButtonModule,
         MatTableModule,
         MatIconModule,
+        HttpClientModule
     ]
 })
 export class AppModule { }
