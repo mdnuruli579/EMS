@@ -9,12 +9,16 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { DepartmentComponent } from './components/department/department.component';
+import { ManagerComponent } from './components/manager/manager.component';
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         FooterComponent,
         EmployeeComponent,
+        DepartmentComponent,
+        ManagerComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

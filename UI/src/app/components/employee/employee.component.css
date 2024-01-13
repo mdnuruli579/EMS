@@ -1,3 +1,12 @@
 .mt-5{
     margin-top: 4rem!important;
 }
+#department,#manager{
+    margin-left: 3px;
+}
+.mat-btn button{
+    margin-right: 10px;
+}
+.col-header{
+    width: 40px;
+}
