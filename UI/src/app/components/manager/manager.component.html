@@ -1,3 +1,40 @@
 <div class="container mt-5">
-    <p>manager works!</p>
-</div>
+    <button mat-raised-button routerLink="/add-manager" color="primary">Add Manager</button>
+    <a mat-raised-button routerLink="" color="primary" id="employee">Employee</a>
+    <a mat-raised-button routerLink="/manager" color="primary" id="department">Department</a>
+<table mat-table [dataSource]="dataList" class="mat-elevation-z8 mat-table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="col-header" *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="managerName">
+      <th mat-header-cell class="col-header" *matHeaderCellDef> Manager Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.managerName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell class="col-header" *matHeaderCellDef> Email</th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+    <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell class="col-header" *matHeaderCellDef> Manager Contact</th>
+        <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+      </ng-container>
+    <ng-container matColumnDef="action">
+        <th mat-header-cell  *matHeaderCellDef> Action </th>
+        <td mat-cell class="mat-btn" *matCellDef="let element"> 
+            <button mat-mini-fab color="warn">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary">
+                <mat-icon>remove_red_eye</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['id','managerName','email','phoneNumber','action']"></tr>
+      <tr mat-row  class="mat-row" *matRowDef="let row; columns: ['id','managerName','email','phoneNumber','action']"></tr>
+  </table>
+ </div>
+

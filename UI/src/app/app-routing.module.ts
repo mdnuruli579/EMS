@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { ManagerComponent } from './components/manager/manager.component';
+import { AddEmployeeComponent } from './components/employee/add-employee/add-employee.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
 {
   path:'manager',
   component:ManagerComponent,
+  pathMatch:"full"
+},
+{
+  path:'add-employee',
+  component:AddEmployeeComponent,
   pathMatch:"full"
 }
 ];

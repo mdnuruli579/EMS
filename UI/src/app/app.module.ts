@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/footer/footer.component';
@@ -13,6 +17,9 @@ import { DepartmentComponent } from './components/department/department.componen
 import { ManagerComponent } from './components/manager/manager.component';
 import { EmployeeService } from './service/employee/employee.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AddEmployeeComponent } from './components/employee/add-employee/add-employee.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
     declarations: [
         AppComponent,
@@ -21,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
         EmployeeComponent,
         DepartmentComponent,
         ManagerComponent,
+        AddEmployeeComponent,
     ],
     providers: [EmployeeService],
     bootstrap: [AppComponent],
@@ -31,7 +39,13 @@ import { HttpClientModule } from '@angular/common/http';
         MatButtonModule,
         MatTableModule,
         MatIconModule,
-        HttpClientModule
+        HttpClientModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatSelectModule
     ]
 })
 export class AppModule { }

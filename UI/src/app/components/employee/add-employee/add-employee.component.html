@@ -1,0 +1,99 @@
+<div class="container mt-5">
+    <form class="employee-form">
+        <mat-form-field class="employee-full-width">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter Employee First Name">
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter Employee Last Name">
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="M">Male</mat-radio-button>
+            <mat-radio-button value="F">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Mobile</mat-label>
+            <input matInput type="number" placeholder="Enter Employee Mobile Number">
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="example@gmail.com">
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Hire Date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Job Title</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="Backend Developer">Backend Developer</mat-option>
+              <mat-option value="Frontend Developer">Frontend Developer</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Manager ID</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">1</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Department ID</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Address ID</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Salary</mat-label>
+            <input matInput type="number" placeholder="Enter Employee Salary">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Employee Status</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="A">Active</mat-option>
+              <mat-option value="P">Pending</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Emergency Contact Name</mat-label>
+            <input matInput  placeholder="Enter Employee's Emergency Contact Name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Relationship with Employee</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="Father">Father</mat-option>
+              <mat-option value="Mother">Mother</mat-option>
+              <mat-option value="Spouse">Spouse</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="employee-full-width">
+            <mat-label>Emergency Contact Number</mat-label>
+            <input matInput type="number" placeholder="Enter Employee's Emergency Contact Number">
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary">Submit</button>
+    </form>
+</div>
+  
