@@ -30,11 +30,19 @@ export interface EmployeeElement {
 })
 export class EmployeeComponent implements OnInit{
   dataList:Data[]=[];
+  dialog: any;
   constructor(private employeeService:EmployeeService){
   }
   ngOnInit():void{
     this.employeeList();
   }
+  deleteEmployee(id: number) {
+    this.employeeService.deleteEmployee(id).subscribe((res:any)=>{
+      console.log(res);
+    },(err)=>{
+      console.log(err);
+    });
+  };
   employeeList():void{
     this.employeeService.employeeList().subscribe(
       (data:Data[])=>{
@@ -46,3 +54,4 @@ export class EmployeeComponent implements OnInit{
     });
   };
 }
+

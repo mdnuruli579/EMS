@@ -1,0 +1,11 @@
+.mt-5{
+    margin-top: 4rem!important;
+}
+mat-grid-tile {
+    background: lightblue;
+}
+.card{
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 10px;
+}

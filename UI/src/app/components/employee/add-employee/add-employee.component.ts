@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { EmployeeService } from '../../../service/employee/employee.service';
+import { UtilityService } from '../../../service/utility.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -7,48 +9,39 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './add-employee.component.css'
 })
 export class AddEmployeeComponent {
-  // employeeForm: FormGroup | undefined;
+  constructor(private employeeservice:EmployeeService,
+    private utilityService:UtilityService,private snackBar: MatSnackBar){
 
-  // constructor(private fb: FormBuilder) {}
+  }
+  formData={
+    firstName:'',
+    lastName:'',
+    dob:'',
+    gender:'',
+    phnNumber:'',
+    email:'',
+    hireDate:'',
+    jobTitle:'',
+    departmentId:'',
+    addressId:'',
+    salary:'',
+    managerId:'',
+    empStatus:'',
+    emergencyContactName:'',
+    emergencyContactRelationship:'',
+    emergencyContactPhoneNumber:'',
+    photoURL:''
+  };
+  submitForm(){
+    this.formData.dob=this.utilityService.dateFormate(new Date(this.formData.dob));
+    this.formData.hireDate=this.utilityService.dateFormate(new Date(this.formData.hireDate));
+    this.employeeservice.addEmployee(this.formData).subscribe((response)=>{
+      this.snackBar.open("Employee Added Sucessfully");
+    },
+    (err)=>{
+      console.log(err);
+    });
+  }
 
-  // ngOnInit(): void {
-  //   this.initForm();
-  // }
-
-  // initForm(): void {
-  //   this.employeeForm = this.fb.group({
-  //     firstName: ['', Validators.required],
-  //     lastName: ['', Validators.required],
-  //     dob: ['', Validators.required],
-  //     gender: ['', Validators.required],
-  //     phnNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     hireDate: ['', Validators.required],
-  //     jobTitle: ['', Validators.required],
-  //     departmentId: [null, Validators.required],
-  //     addressId: [null, Validators.required],
-  //     salary: [null, Validators.required],
-  //     managerId: [null, Validators.required],
-  //     empStatus: ['', Validators.required],
-  //     emergencyContactName: ['', Validators.required],
-  //     emergencyContactRelationship: ['', Validators.required],
-  //     emergencyContactPhoneNumber: [
-  //       '',
-  //       [Validators.required, Validators.pattern(/^\d{10}$/)],
-  //     ],
-  //     photoURL: [''],
-  //     createTime: [''],
-  //   });
-  // }
-
-  // onSubmit(): void {
-  //   if (this.employeeForm.valid) {
-  //     // Add logic to save employee details
-  //     console.log(this.employeeForm.value);
-  //   } else {
-  //     // Handle form validation errors
-  //     console.log('Form is invalid');
-  //   }
-  // }
 
 }

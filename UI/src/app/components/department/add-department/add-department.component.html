@@ -1,0 +1,25 @@
+<div class="container">
+    <form (ngSubmit)="addDepartment()" class="center-form">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Department Name" [(ngModel)]="department.departmentName" name="departmentName">
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Location" [(ngModel)]="department.location" name="location">
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <mat-dialog-actions>
+        <button mat-flat-button color="warn" type="button" (click)="cancelPopup()">Cancel</button>
+        <button mat-flat-button color="primary" type="submit">Save</button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+  

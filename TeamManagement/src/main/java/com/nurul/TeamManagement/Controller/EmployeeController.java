@@ -78,7 +78,7 @@ public class EmployeeController {
 
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Employee> Update(@PathVariable("id") Integer id,@RequestBody Employee newEmployee){
+	public ResponseEntity<String> UpdateEmployee(@PathVariable("id") Integer id,@RequestBody Employee newEmployee){
 		Employee employee=null;
 		try {
 			employee=employeeService.getEmployeeById(id);
@@ -99,7 +99,7 @@ public class EmployeeController {
 			if(newEmployee.getEmergencyContactPhoneNumber()!=null)
 				employee.setEmergencyContactPhoneNumber(newEmployee.getEmergencyContactPhoneNumber());
 			if(newEmployee.getEmergencyContactRelationship()!=null)
-				employee.setEmergencyContactPhoneNumber(newEmployee.getEmergencyContactPhoneNumber());
+				employee.setEmergencyContactRelationship(newEmployee.getEmergencyContactRelationship());
 			if(newEmployee.getEmpStatus()!=null)
 				employee.setEmpStatus(newEmployee.getEmpStatus());
 			if(newEmployee.getSalary()!=null)
@@ -117,10 +117,11 @@ public class EmployeeController {
 			if(newEmployee.getManagerId()!=null)
 				employee.setManagerId(newEmployee.getManagerId());
 			employee.setCreateTime(LocalDate.now());
+			employeeService.save(employee);
 		}
 		catch(Exception e){
-			return new ResponseEntity<Employee>(employee,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Error While Updating",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Employee>(employee,HttpStatus.OK);
+		return new ResponseEntity<String>("Record Updated",HttpStatus.OK);
 	 }
 }

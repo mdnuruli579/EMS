@@ -58,16 +58,22 @@ public class DepartmentController {
 			catch(Exception e) {
 				return new ResponseEntity<String>("Data does not saved",HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			return new ResponseEntity<String>("Data Saved Sucessfully",HttpStatus.CREATED);
+			return new ResponseEntity<String>("Data Saved Sucessfully",HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	 public ResponseEntity<String> deleteDepartmentById(@PathVariable("id") Integer id) {
 		try {
-			departmentService.getDepartmentById(id);
+			Department department=departmentService.getDepartmentById(id);
+			if(department!=null) {
+				departmentService.deleteDepartmentById(id);
+			}
+			else {
+				return new ResponseEntity<String>("Department not found", HttpStatus.NOT_FOUND);
+			}
 		}
 		catch(Exception e) {
-			return new ResponseEntity<String>("Somthing wrong",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	    return new ResponseEntity<String>("Deleted Sucessfully",HttpStatus.OK);
 	 }
@@ -82,6 +88,7 @@ public class DepartmentController {
 				department.setDepartmentName(newDepartment.getDepartmentName());
 			if(newDepartment.getLocation()!=null)
 				department.setLocation(newDepartment.getLocation());
+			departmentService.save(department);
 		}
 		catch(Exception e){
 			return new ResponseEntity<Department>(department,HttpStatus.INTERNAL_SERVER_ERROR);

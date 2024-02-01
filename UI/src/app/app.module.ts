@@ -13,6 +13,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { DepartmentComponent } from './components/department/department.component';
 import { ManagerComponent } from './components/manager/manager.component';
 import { EmployeeService } from './service/employee/employee.service';
@@ -20,6 +21,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddEmployeeComponent } from './components/employee/add-employee/add-employee.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FormsModule } from '@angular/forms';
+import { ViewEmployeeComponent } from './components/employee/view-employee/view-employee.component';
+import { EditEmployeeComponent } from './components/employee/edit-employee/edit-employee.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AddDepartmentComponent } from './components/department/add-department/add-department.component';
+import { ViewDepartmentComponent } from './components/department/view-department/view-department.component';
+import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,6 +40,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         DepartmentComponent,
         ManagerComponent,
         AddEmployeeComponent,
+        ViewEmployeeComponent,
+        EditEmployeeComponent,
+        AddDepartmentComponent,
+        ViewDepartmentComponent,
+        EditDepartmentComponent,
     ],
     providers: [EmployeeService],
     bootstrap: [AppComponent],
@@ -45,7 +61,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         MatFormFieldModule,
         MatNativeDateModule,
         MatRadioModule,
-        MatSelectModule
+        MatSelectModule,
+        FormsModule,
+        MatGridListModule,
+        MatCardModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        CommonModule
     ]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <button mat-raised-button routerLink="/add-department" color="primary">Add Department</button>
+    <button mat-raised-button (click)="openDepartmentForm()" color="primary">Add Department</button>
     <a mat-raised-button routerLink="" color="primary" id="employee">Employee</a>
     <a mat-raised-button routerLink="/manager" color="primary" id="manager">Manager</a>
 <table mat-table [dataSource]="dataList" class="mat-elevation-z8 mat-table">
@@ -18,7 +18,7 @@
     <ng-container matColumnDef="action">
         <th mat-header-cell  *matHeaderCellDef> Action </th>
         <td mat-cell class="mat-btn" *matCellDef="let element"> 
-            <button mat-mini-fab color="warn">
+            <button mat-mini-fab (click)="deleteDepartment(element.id)" color="warn">
                 <mat-icon>delete</mat-icon>
             </button>
             <button mat-mini-fab color="primary">
