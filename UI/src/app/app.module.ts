@@ -31,6 +31,14 @@ import { AddDepartmentComponent } from './components/department/add-department/a
 import { ViewDepartmentComponent } from './components/department/view-department/view-department.component';
 import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatOptionModule } from '@angular/material/core';
+import { AddressComponent } from './components/address/address.component';
+import { AddManagerComponent } from './components/manager/add-manager/add-manager.component';
+import { ViewManagerComponent } from './components/manager/view-manager/view-manager.component';
+import { EditManagerComponent } from './components/manager/edit-manager/edit-manager.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { LoginComponent } from './components/login/login.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -45,6 +53,12 @@ import { MatDialogModule } from '@angular/material/dialog';
         AddDepartmentComponent,
         ViewDepartmentComponent,
         EditDepartmentComponent,
+        AddressComponent,
+        AddManagerComponent,
+        ViewManagerComponent,
+        EditManagerComponent,
+        LoginComponent,
+        CreateUserComponent,
     ],
     providers: [EmployeeService],
     bootstrap: [AppComponent],
@@ -67,7 +81,9 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatCardModule,
         MatSnackBarModule,
         MatDialogModule,
-        CommonModule
+        CommonModule,
+        MatOptionModule,
+        MatToolbarModule
     ]
 })
 export class AppModule { }

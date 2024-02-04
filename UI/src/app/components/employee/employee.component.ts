@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../service/employee/employee.service';
 import { Data } from '@angular/router';
+import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface EmployeeElement {
   id: number;
@@ -30,24 +32,42 @@ export interface EmployeeElement {
 })
 export class EmployeeComponent implements OnInit{
   dataList:Data[]=[];
-  dialog: any;
-  constructor(private employeeService:EmployeeService){
+  constructor(private employeeService:EmployeeService,private snackBar: MatSnackBar){
   }
   ngOnInit():void{
     this.employeeList();
   }
   deleteEmployee(id: number) {
-    this.employeeService.deleteEmployee(id).subscribe((res:any)=>{
-      console.log(res);
-    },(err)=>{
-      console.log(err);
+    Swal.fire({
+      title: 'Warning!',
+      text: 'Are You Sure Want To Delete ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.employeeService.deleteEmployee(id).subscribe((res:any)=>{
+          console.log(res);
+          this.snackBar.open(res.msg, 'Cancel', {
+            duration: 5000,
+            panelClass: ['snackBarColor'],
+          });
+        },(err)=>{
+          console.log(err);
+        });
+      } else {
+        this.snackBar.open('Record Not Deleted', 'Cancel', {
+          duration: 5000,
+          panelClass: ['snackBarColor'],
+        });
+      }
     });
   };
   employeeList():void{
     this.employeeService.employeeList().subscribe(
       (data:Data[])=>{
       this.dataList=data;
-      console.log(this.dataList);
     },
     (err:any)=>{
       console.log(err);

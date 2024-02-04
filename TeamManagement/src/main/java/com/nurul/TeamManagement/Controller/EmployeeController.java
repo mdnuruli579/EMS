@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Employee;
 import com.nurul.TeamManagement.Services.EmployeeService;
 
@@ -53,32 +54,32 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public ResponseEntity<String> AddEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<ApiResponse> AddEmployee(@RequestBody Employee employee) {
 			
 			try {
 				employee.setCreateTime(LocalDate.now());
 				employeeService.save(employee);
 			}
 			catch(Exception e) {
-				return new ResponseEntity<String>("Data does not saved",HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<String>("Data Saved Sucessfully",HttpStatus.CREATED);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Added Employee Record Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	 public ResponseEntity<String> deleteEmployeeById(@PathVariable("id") Integer id) {
+	 public ResponseEntity<ApiResponse> deleteEmployeeById(@PathVariable("id") Integer id) {
 		try {
 			employeeService.deleteEmployeeById(id);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<String>("Somthing wrong",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ApiResponse>( new ApiResponse("Somthing wrong",HttpStatus.NO_CONTENT.value(),HttpStatus.NO_CONTENT),HttpStatus.NOT_FOUND);
 		}
-	    return new ResponseEntity<String>("Deleted Sucessfully",HttpStatus.OK);
+	    return new ResponseEntity<ApiResponse>( new ApiResponse ("Deleted Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	 }
 
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> UpdateEmployee(@PathVariable("id") Integer id,@RequestBody Employee newEmployee){
+	public ResponseEntity<ApiResponse> UpdateEmployee(@PathVariable("id") Integer id,@RequestBody Employee newEmployee){
 		Employee employee=null;
 		try {
 			employee=employeeService.getEmployeeById(id);
@@ -120,8 +121,8 @@ public class EmployeeController {
 			employeeService.save(employee);
 		}
 		catch(Exception e){
-			return new ResponseEntity<String>("Error While Updating",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Error While Updating",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<String>("Record Updated",HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(new ApiResponse("Record Updated Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	 }
 }

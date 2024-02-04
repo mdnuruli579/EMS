@@ -13,7 +13,8 @@ import { Location } from '@angular/common';
 export class DepartmentComponent {
   dataList:Data[]=[];
   constructor(private departmentService:DepartmentService,
-    private dialog: MatDialog,private location: Location){
+    private dialog: MatDialog){
+
   }
   ngOnInit():void{
     this.departmentList();

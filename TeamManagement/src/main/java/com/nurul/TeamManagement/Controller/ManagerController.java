@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Manager;
 import com.nurul.TeamManagement.Services.ManagerService;
 
@@ -50,31 +51,31 @@ public class ManagerController {
 		return new ResponseEntity<Manager>(manager,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public ResponseEntity<String> AddManager(@RequestBody Manager manager) {
+	public ResponseEntity<ApiResponse> AddManager(@RequestBody Manager manager) {
 			
 			try {
 				managerService.save(manager);
 			}
 			catch(Exception e) {
-				return new ResponseEntity<String>("Data does not saved",HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<String>("Data Saved Sucessfully",HttpStatus.CREATED);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Added Manager Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	 public ResponseEntity<String> deleteManagerById(@PathVariable("id") Integer id) {
+	 public ResponseEntity<ApiResponse> deleteManagerById(@PathVariable("id") Integer id) {
 		try {
-			managerService.getManagerById(id);
+			managerService.deleteManagerById(id);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<String>("Somthing wrong",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ApiResponse>( new ApiResponse("Somthing wrong",HttpStatus.NO_CONTENT.value(),HttpStatus.NO_CONTENT),HttpStatus.NOT_FOUND);
 		}
-	    return new ResponseEntity<String>("Deleted Sucessfully",HttpStatus.OK);
+	    return new ResponseEntity<ApiResponse>( new ApiResponse ("Deleted Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	 }
 
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Manager> Update(@PathVariable("id") Integer id,@RequestBody Manager newManager){
+	public ResponseEntity<ApiResponse> Update(@PathVariable("id") Integer id,@RequestBody Manager newManager){
 		Manager manager=null;
 		try {
 			manager=managerService.getManagerById(id);
@@ -84,11 +85,12 @@ public class ManagerController {
 				manager.setEmail(newManager.getEmail());
 			if(newManager.getPhoneNumber()!=null)
 				manager.setPhoneNumber(newManager.getPhoneNumber());
+			managerService.save(manager);
 		}
 		catch(Exception e){
-			return new ResponseEntity<Manager>(manager,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Error While Updating",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Manager>(manager,HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(new ApiResponse("Record Updated Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	 }
 
 }

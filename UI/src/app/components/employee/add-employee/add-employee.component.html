@@ -1,123 +1,180 @@
 <div class="container mt-5">
+    <p class="form-header">
+        <mat-toolbar >
+          <span id="Eheader">Add Your Employee Details</span>
+        </mat-toolbar>
+      </p>
     <form class="employee-form" (submit)="submitForm()">
-        <mat-form-field class="employee-full-width">
-          <mat-label>First Name</mat-label>
-          <input matInput placeholder="Enter Employee First Name" [(ngModel)]="formData.firstName"
-          [ngModelOptions]="{standalone: true}"
-          name="firstName">
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Enter Employee Last Name" [(ngModel)]="formData.lastName"
-            [ngModelOptions]="{standalone: true}"
-            name="lastName">
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Date of Birth</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="formData.dob" placeholder="MM/DD/YYYY"
-            [ngModelOptions]="{standalone: true}"
-            name="dob">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="formData.gender" [ngModelOptions]="{standalone: true}">
-            <mat-radio-button value="M" name="gender">Male</mat-radio-button>
-            <mat-radio-button value="F" name="gender">Female</mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Mobile</mat-label>
-            <input matInput type="text" [(ngModel)]="formData.phnNumber"
-            [ngModelOptions]="{standalone: true}"
-            placeholder="Enter Employee Mobile Number"
-            name="phnNumber">
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" [(ngModel)]="formData.email"
-            [ngModelOptions]="{standalone: true}"
-            placeholder="example@gmail.com"
-            name="email">
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Hire Date</mat-label>
-            <input matInput [matDatepicker]="picker1" [(ngModel)]="formData.hireDate"
-            [ngModelOptions]="{standalone: true}"
-            placeholder="MM/DD/YYYY"
-            name="hireDate">
-            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Job Title</mat-label>
-            <mat-select [(ngModel)]="formData.jobTitle" name="jobTitle" [ngModelOptions]="{standalone: true}">
-              <mat-option value="">None</mat-option>
-              <mat-option value="Backend Developer">Backend Developer</mat-option>
-              <mat-option value="Frontend Developer">Frontend Developer</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Manager ID</mat-label>
-            <mat-select [(ngModel)]="formData.managerId" name="managerId" [ngModelOptions]="{standalone: true}">
-              <mat-option>None</mat-option>
-              <mat-option value="1">Manager1</mat-option>
-              <mat-option value="2">Manager2</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Department ID</mat-label>
-            <mat-select [(ngModel)]="formData.departmentId" name="departmentId" [ngModelOptions]="{standalone: true}">
-              <mat-option>None</mat-option>
-              <mat-option value="1">It</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Address ID</mat-label>
-            <mat-select [(ngModel)]="formData.addressId" name="addressId" [ngModelOptions]="{standalone: true}">
-              <mat-option>None</mat-option>
-              <mat-option value="1">Current Address</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Salary</mat-label>
-            <input matInput type="number" [(ngModel)]="formData.salary"
-            [ngModelOptions]="{standalone: true}" 
-            name="salary"
-            placeholder="Enter Employee Salary">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Employee Status</mat-label>
-            <mat-select [(ngModel)]="formData.empStatus" [ngModelOptions]="{standalone: true}" name="empStatus">
-              <mat-option>None</mat-option>
-              <mat-option value="A">Active</mat-option>
-              <mat-option value="P">Pending</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Emergency Contact Name</mat-label>
-            <input matInput [(ngModel)]="formData.emergencyContactName"
-            [ngModelOptions]="{standalone: true}" 
-            name="emergencyContactName"
-            placeholder="Enter Employee's Emergency Contact Name">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Relationship with Employee</mat-label>
-            <mat-select [(ngModel)]="formData.emergencyContactRelationship"
-            [ngModelOptions]="{standalone: true}"
-             name="emergencyContactRelationship">
-              <mat-option value="">None</mat-option>
-              <mat-option value="Father">Father</mat-option>
-              <mat-option value="Mother">Mother</mat-option>
-              <mat-option value="Spouse">Spouse</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="employee-full-width">
-            <mat-label>Emergency Contact Number</mat-label>
-            <input matInput type="text" [(ngModel)]="formData.emergencyContactPhoneNumber"
-            [ngModelOptions]="{standalone: true}"
-            name="emergencyContactPhoneNumber"
-             placeholder="Enter Employee's Emergency Contact Number">
-        </mat-form-field>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="Enter Employee First Name" [(ngModel)]="formData.firstName"
+                    [ngModelOptions]="{standalone: true}"
+                    name="firstName">
+                  </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Enter Employee Last Name" [(ngModel)]="formData.lastName"
+                    [ngModelOptions]="{standalone: true}"
+                    name="lastName">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="formData.dob" placeholder="MM/DD/YYYY"
+                    [ngModelOptions]="{standalone: true}"
+                    name="dob">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="formData.gender" [ngModelOptions]="{standalone: true}">
+                    <mat-radio-button value="M" name="gender">Male</mat-radio-button>
+                    <mat-radio-button value="F" name="gender">Female</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Mobile</mat-label>
+                    <input matInput type="text" [(ngModel)]="formData.phnNumber"
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="Enter Employee Mobile Number"
+                    name="phnNumber">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" [(ngModel)]="formData.email"
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="example@gmail.com"
+                    name="email">
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Hire Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="formData.hireDate"
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="MM/DD/YYYY"
+                    name="hireDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Job Title</mat-label>
+                    <mat-select [(ngModel)]="formData.jobTitle" name="jobTitle" [ngModelOptions]="{standalone: true}">
+                      <mat-option value="">None</mat-option>
+                      <mat-option value="Backend Developer">Backend Developer</mat-option>
+                      <mat-option value="Frontend Developer">Frontend Developer</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Manager</mat-label>
+                    <mat-select [(ngModel)]="formData.managerId" name="managerId" [ngModelOptions]="{standalone: true}">
+                      <mat-option>None</mat-option>
+                      <mat-option *ngFor=" let mngr of mngrList" [value]="mngr['id']">{{mngr['managerName']}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Department</mat-label>
+                    <mat-select [(ngModel)]="formData.departmentId" name="departmentId" [ngModelOptions]="{standalone: true}">
+                      <mat-option >None</mat-option>
+                      <mat-option *ngFor=" let dept of deptList" [value]="dept['id']">{{dept['departmentName']}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Address</mat-label>
+                    <mat-select [(ngModel)]="formData.addressId" name="addressId" [ngModelOptions]="{standalone: true}">
+                      <mat-option>None</mat-option>
+                      <mat-option value="1">Current Address</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Salary</mat-label>
+                    <input matInput type="number" [(ngModel)]="formData.salary"
+                    [ngModelOptions]="{standalone: true}" 
+                    name="salary"
+                    placeholder="Enter Employee Salary">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Employee Status</mat-label>
+                    <mat-select [(ngModel)]="formData.empStatus" [ngModelOptions]="{standalone: true}" name="empStatus">
+                      <mat-option>None</mat-option>
+                      <mat-option value="A">Active</mat-option>
+                      <mat-option value="P">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Emergency Contact Name</mat-label>
+                    <input matInput [(ngModel)]="formData.emergencyContactName"
+                    [ngModelOptions]="{standalone: true}" 
+                    name="emergencyContactName"
+                    placeholder="Enter Employee's Emergency Contact Name">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Relationship with Employee</mat-label>
+                    <mat-select [(ngModel)]="formData.emergencyContactRelationship"
+                    [ngModelOptions]="{standalone: true}"
+                     name="emergencyContactRelationship">
+                      <mat-option value="">None</mat-option>
+                      <mat-option value="Father">Father</mat-option>
+                      <mat-option value="Mother">Mother</mat-option>
+                      <mat-option value="Spouse">Spouse</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="employee-full-width">
+                    <mat-label>Emergency Contact Number</mat-label>
+                    <input matInput type="text" [(ngModel)]="formData.emergencyContactPhoneNumber"
+                    [ngModelOptions]="{standalone: true}"
+                    name="emergencyContactPhoneNumber"
+                     placeholder="Enter Employee's Emergency Contact Number">
+                </mat-form-field>
+            </div>
+        </div>
         <button mat-raised-button type="submit" color="primary">Submit</button>
+        <a routerLink="">
+            <button mat-raised-button color="primary">Cancel</button>
+        </a>
     </form>
 </div>
   

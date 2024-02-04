@@ -1,7 +1,7 @@
 <div class="container mt-5">
-    <button mat-raised-button routerLink="/add-manager" color="primary">Add Manager</button>
+    <button mat-raised-button (click)="addManagerForm()" color="primary">Add Manager</button>
     <a mat-raised-button routerLink="" color="primary" id="employee">Employee</a>
-    <a mat-raised-button routerLink="/manager" color="primary" id="department">Department</a>
+    <a mat-raised-button routerLink="/department" color="primary" id="department">Department</a>
 <table mat-table [dataSource]="dataList" class="mat-elevation-z8 mat-table">
     <ng-container matColumnDef="id">
       <th mat-header-cell class="col-header" *matHeaderCellDef> ID </th>
@@ -22,13 +22,13 @@
     <ng-container matColumnDef="action">
         <th mat-header-cell  *matHeaderCellDef> Action </th>
         <td mat-cell class="mat-btn" *matCellDef="let element"> 
-            <button mat-mini-fab color="warn">
+            <button mat-mini-fab color="warn" (click)="deleteManager(element.id)">
                 <mat-icon>delete</mat-icon>
             </button>
-            <button mat-mini-fab color="primary">
+            <button mat-mini-fab color="primary" (click)="viewManagerForm(element.id)">
                 <mat-icon>remove_red_eye</mat-icon>
             </button>
-            <button mat-mini-fab color="primary">
+            <button mat-mini-fab color="primary" (click)="editManagerForm(element.id)">
                 <mat-icon>edit</mat-icon>
             </button>
         </td>

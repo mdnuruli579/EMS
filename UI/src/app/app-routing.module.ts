@@ -8,53 +8,74 @@ import { ViewEmployeeComponent } from './components/employee/view-employee/view-
 import { EditEmployeeComponent } from './components/employee/edit-employee/edit-employee.component';
 import { ViewDepartmentComponent } from './components/department/view-department/view-department.component';
 import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
+import { AddressComponent } from './components/address/address.component';
+import { AddManagerComponent } from './components/manager/add-manager/add-manager.component';
+import { AuthGuardService } from './service/Auth/auth-guard.service';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
+    path:'login',
+    component:LoginComponent
+  },
+  //employee section
+  {
     path:'',
     component:EmployeeComponent,
+    canActivate: [AuthGuardService],
     pathMatch:"full"
   },
+  {
+    path:'add-employee',
+    component:AddEmployeeComponent,
+    canActivate: [AuthGuardService],
+    pathMatch:"full"
+  },
+  {
+    path:'view-employee/:id',
+    component:ViewEmployeeComponent,
+    canActivate: [AuthGuardService],
+    pathMatch:"full"
+  },
+  {
+    path:'edit-employee/:id',
+    component:EditEmployeeComponent,
+    canActivate: [AuthGuardService],
+    pathMatch:"full"
+  },
+  //department section
 {
   path:'department',
   component:DepartmentComponent,
-  pathMatch:"full"
-},
-{
-  path:'manager',
-  component:ManagerComponent,
-  pathMatch:"full"
-},
-{
-  path:'add-employee',
-  component:AddEmployeeComponent,
-  pathMatch:"full"
-},
-{
-  path:'view-employee/:id',
-  component:ViewEmployeeComponent,
-  pathMatch:"full"
-},
-{
-  path:'edit-employee/:id',
-  component:EditEmployeeComponent,
+  canActivate: [AuthGuardService],
   pathMatch:"full"
 },
 {
   path:'add-department',
   component:AddEmployeeComponent,
+  canActivate: [AuthGuardService],
   pathMatch:"full"
 },
 {
   path:'view-department/:id',
   component:ViewDepartmentComponent,
+  canActivate: [AuthGuardService],
   pathMatch:"full"
 },
 {
   path:'edit-department/:id',
   component:EditDepartmentComponent,
+  canActivate: [AuthGuardService],
   pathMatch:"full"
 },
+//manager section
+{
+  path:'manager',
+  component:ManagerComponent,
+  canActivate: [AuthGuardService],
+  pathMatch:"full"
+},
+
 ];
 
 @NgModule({

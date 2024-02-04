@@ -1,12 +1,23 @@
 .mt-5{
-    margin-top: 4rem!important;
+  margin-top: 4rem!important;
+}  
+.employee-full-width {
+  width: 100%;
 }
-.employee-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .employee-full-width {
-    width: 100%;
-  }
+.form-header {
+  font-size: 24px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+#Eheader{
+  margin-left: 40%;
+}
+button{
+  margin-left: 3px;
+}
+.snackBarColor {
+  background-color:green;
+  color:black;
+}

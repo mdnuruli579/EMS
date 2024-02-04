@@ -29,9 +29,15 @@
                     <mat-card-subtitle>Salary:{{formData.salary}}</mat-card-subtitle>
                     <mat-card-subtitle>Status:{{formData.empStatus}}</mat-card-subtitle>
                 </div>
-                <mat-card-content>Assigned Manager:{{formData.managerId}}</mat-card-content>
-                <mat-card-content>Department:{{formData.departmentId}}</mat-card-content>
+                <mat-card-content>Assigned Manager:{{managerDetail.managerName}}</mat-card-content>
+                <mat-card-content>Department:{{department.departmentName}}</mat-card-content>
             </mat-card>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button mat-flat-button routerLink="" color="primary">Back</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

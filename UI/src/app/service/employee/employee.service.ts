@@ -18,8 +18,7 @@ export class EmployeeService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.apiUrl}/employee/add`, data,{ headers });
   }
-  deleteEmployee(id:number): Observable<any> {
-    console.log(id); 
+  deleteEmployee(id:number): Observable<any> { 
     const apiUrl = `${this.apiUrl}/employee/delete/${id}`;
     return this.http.delete<any>(apiUrl);
   }

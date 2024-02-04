@@ -23,4 +23,7 @@ export class DepartmentService {
     const apiUrl = `${this.apiUrl}/department/delete/${id}`;
     return this.http.delete<any>(apiUrl);
   }
+  viewDepartment(id:string):Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/department/detail/${id}`);
+  }
 }
