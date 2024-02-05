@@ -26,4 +26,8 @@ export class DepartmentService {
   viewDepartment(id:string):Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/department/detail/${id}`);
   }
+  editDepartment(data:any,id:string): Observable<any>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(`${this.apiUrl}/department/update/${id}`,data,{headers});
+  }
 }

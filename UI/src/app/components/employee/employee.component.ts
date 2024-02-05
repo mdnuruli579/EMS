@@ -53,6 +53,7 @@ export class EmployeeComponent implements OnInit{
             duration: 5000,
             panelClass: ['snackBarColor'],
           });
+          this.employeeList();
         },(err)=>{
           console.log(err);
         });

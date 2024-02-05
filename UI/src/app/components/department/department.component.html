@@ -21,10 +21,10 @@
             <button mat-mini-fab (click)="deleteDepartment(element.id)" color="warn">
                 <mat-icon>delete</mat-icon>
             </button>
-            <button mat-mini-fab color="primary">
+            <button mat-mini-fab color="primary" (click)="viewDepartment(element.id)">
                 <mat-icon>remove_red_eye</mat-icon>
             </button>
-            <button mat-mini-fab color="primary">
+            <button mat-mini-fab color="primary" (click)="editDepartment(element.id)">
                 <mat-icon>edit</mat-icon>
             </button>
         </td>

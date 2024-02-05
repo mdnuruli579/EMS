@@ -31,4 +31,11 @@
       }
     }
   }
+  .login {
+    background-image: url('../../../assets/media/loginBackground.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  
   
