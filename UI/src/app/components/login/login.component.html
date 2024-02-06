@@ -3,14 +3,21 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle *ngIf="islogin" id="errmsg">{{msg}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <form (ngSubmit)="UserLogin()">
+        <form (ngSubmit)="UserLogin()" #loginNgForm="ngForm" novalidate>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Username" required [(ngModel)]="loginForm.username" [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="Username" name="username" required [(ngModel)]="loginForm.username" #username="ngModel">
+            <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+              <span *ngIf="username.errors?.['required']">Username is required</span>
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
-            <input matInput type="password" placeholder="Password" required [(ngModel)]="loginForm.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="password" placeholder="Password" name="password" required [(ngModel)]="loginForm.password" #password="ngModel">
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+              <span *ngIf="password.errors?.['required']">Password is required</span>
+            </mat-error>
           </mat-form-field>
           <button mat-raised-button color="primary" type="submit">Login</button>
           <div class="link-container">
@@ -21,5 +28,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-  
 </div>

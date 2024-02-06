@@ -1,8 +1,5 @@
 package com.nurul.TeamManagement.Services;
 import org.springframework.stereotype.Service;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +28,7 @@ public class OtpServiceImpl implements OtpService {
 		     return generatedOtp;
 		 }
 		
-		 @Override
+		 /*@Override
 		 public void sendOtpEmail(String email, String otp){
 				
 				  Properties properties = new Properties(); properties.put("mail.smtp.auth",
@@ -63,7 +60,7 @@ public class OtpServiceImpl implements OtpService {
 					 * helper.setText("Your OTP For Varication is: " +otp
 					 * +"\nValid only for 10 minutes"); javaMailSender.send(message);
 					 */
-		         System.out.println("Mail sent");
+		      /*   System.out.println("Mail sent");
 		     } catch (MessagingException e) {
 		         e.printStackTrace();
 		     }
@@ -81,7 +78,7 @@ public class OtpServiceImpl implements OtpService {
 		        return false;
 		    }
 		}
-		
+		*/
 		private static class OtpData {
 		    private final String otp;
 		    private final long expirationTime;
@@ -98,6 +95,18 @@ public class OtpServiceImpl implements OtpService {
 		    public long getExpirationTime() {
 		        return expirationTime;
 		    }
+		}
+
+		@Override
+		public void sendOtpEmail(String email, String otp) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean validateOtp(String email, String userEnteredOtp) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 }
 

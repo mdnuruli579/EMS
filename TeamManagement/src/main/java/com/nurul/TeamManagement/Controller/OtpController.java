@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nurul.TeamManagement.Entity.EmailOtp;
 import com.nurul.TeamManagement.Services.OtpService;
+import com.nurul.TeamManagement.Services.SmtpMailSender;
 
 	@RestController
 	@RequestMapping("/otp")
 	public class OtpController {
+		@Autowired
+		private SmtpMailSender smtpMailsender;
+		
 		 private final OtpService otpService;
 		
 		 @Autowired
@@ -22,7 +26,7 @@ import com.nurul.TeamManagement.Services.OtpService;
 		 public void sendOtp(@RequestBody EmailOtp emailOtp) {
 		     String generatedOtp = otpService.generateOtp(emailOtp.getEmail());
 		     try {
-				otpService.sendOtpEmail(emailOtp.getEmail(), generatedOtp);
+		    	 smtpMailsender.sendOtpEmail(emailOtp.getEmail(), generatedOtp);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

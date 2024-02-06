@@ -39,6 +39,7 @@ import { EditManagerComponent } from './components/manager/edit-manager/edit-man
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './components/login/login.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     declarations: [
         AppComponent,
@@ -83,7 +84,8 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
         MatDialogModule,
         CommonModule,
         MatOptionModule,
-        MatToolbarModule
+        MatToolbarModule,
+        ReactiveFormsModule
     ]
 })
 export class AppModule { }
