@@ -40,6 +40,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './components/login/login.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './components/pageNotFound/page-not-found/page-not-found.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -60,6 +61,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         EditManagerComponent,
         LoginComponent,
         CreateUserComponent,
+        PageNotFoundComponent,
     ],
     providers: [EmployeeService],
     bootstrap: [AppComponent],

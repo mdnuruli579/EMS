@@ -8,11 +8,13 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-      islogin:boolean;
+      islogin:boolean=false;
       constructor(
         private autservice:AuthService,
         private router: Router
         ){
+      }
+      ngOnInit():void{
         this.islogin=this.autservice.isLoggedIn();
       }
       logout():void{

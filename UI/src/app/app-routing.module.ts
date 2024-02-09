@@ -12,8 +12,10 @@ import { AddressComponent } from './components/address/address.component';
 import { AddManagerComponent } from './components/manager/add-manager/add-manager.component';
 import { AuthGuardService } from './service/Auth/auth-guard.service';
 import { LoginComponent } from './components/login/login.component';
+import { PageNotFoundComponent } from './components/pageNotFound/page-not-found/page-not-found.component';
 
 const routes: Routes = [
+  //login
   {
     path:'login',
     component:LoginComponent
@@ -75,6 +77,11 @@ const routes: Routes = [
   canActivate: [AuthGuardService],
   pathMatch:"full"
 },
+  //page not found
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 
 ];
 

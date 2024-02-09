@@ -59,7 +59,7 @@ export class LoginComponent {
       }
     },(err)=>{
       console.log(err);
-      this.islogin=true;
+      this.islogin=this.authservice.isLoggedIn();
       this.msg=err.error.msg;
     })
   }
