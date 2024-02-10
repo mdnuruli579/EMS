@@ -6,3 +6,8 @@
     color: white;
     cursor: pointer;
 }
+img{
+    width: 151px;
+    height: 41px;
+    border-radius: 34px
+}

@@ -22,6 +22,7 @@ export class ViewEmployeeComponent implements OnInit{
         id:'',
         location:'',
       }
+  spinner: boolean=false;
       constructor(private employeeService:EmployeeService,
         private deptService:DepartmentService,private managerService:ManagerService,
         private route: ActivatedRoute){}
@@ -42,7 +43,7 @@ export class ViewEmployeeComponent implements OnInit{
         emergencyContactName:'',
         emergencyContactRelationship:'',
         emergencyContactPhoneNumber:'',
-        photoURL:''
+        image:''
       };
       ngOnInit():void{
         this.route.paramMap.pipe(
@@ -68,11 +69,20 @@ export class ViewEmployeeComponent implements OnInit{
           console.log(err);
         })
       }
+      getImageUrl(): string {
+        return 'data:image/jpeg;base64,' + this.formData.image;
+      }
       viewEmployee(id:any):void{
         this.employeeService.viewEmployee(id).subscribe((res)=>{
-          this.formData=res;
+          if(res){
+            setTimeout(()=>{
+              this.spinner=false;
+            },1000)
+            this.formData=res;
+          }
           this.managerDetails();
           this.departmentDetails();
+          this.spinner=true;
         },(err)=>{
           console.log(err);
         })

@@ -24,12 +24,12 @@ export class LoginComponent {
     private router: Router,
     private dialog: MatDialog,
     private usrService:UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
     ){
       this.islogin=false;
       this.msg="";
     }
-
+    
   userPopup():void{
     const dialogRef = this.dialog.open(CreateUserComponent, {
       width: '400px',
@@ -49,18 +49,25 @@ export class LoginComponent {
           duration: 5000,
           panelClass: ['snackBarColor'],
         });
+        this.islogin=false;
         this.authservice.setAuthenticationStatus(true);
         this.router.navigate(['']);
       }
       else{
+        this.msg=response.msg;
+        this.islogin=true;
         this.snackBar.open(response.msg, 'Cancel', {
           panelClass: ['snackBarColor'],
         });
       }
     },(err)=>{
       console.log(err);
-      this.islogin=this.authservice.isLoggedIn();
+      this.islogin=true;
       this.msg=err.error.msg;
+      this.snackBar.open(this.msg, 'Cancel', {
+        duration: 5000,
+        panelClass: ['snackBarColor'],
+      });
     })
   }
 }

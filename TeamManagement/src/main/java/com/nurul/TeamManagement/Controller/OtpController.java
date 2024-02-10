@@ -1,19 +1,24 @@
 package com.nurul.TeamManagement.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.EmailOtp;
+import com.nurul.TeamManagement.Entity.Employee;
 import com.nurul.TeamManagement.Services.OtpService;
-import com.nurul.TeamManagement.Services.SmtpMailSender;
+import com.nurul.TeamManagement.Services.OtpServiceImpl;
 
 	@RestController
 	@RequestMapping("/otp")
 	public class OtpController {
+		
 		@Autowired
-		private SmtpMailSender smtpMailsender;
+		OtpServiceImpl otpServiceImpl;
 		
 		 private final OtpService otpService;
 		
@@ -23,19 +28,27 @@ import com.nurul.TeamManagement.Services.SmtpMailSender;
 		 }
 		
 		 @PostMapping("/send")
-		 public void sendOtp(@RequestBody EmailOtp emailOtp) {
+		 public ResponseEntity<ApiResponse> sendOtp(@RequestBody EmailOtp emailOtp) {
 		     String generatedOtp = otpService.generateOtp(emailOtp.getEmail());
 		     try {
-		    	 smtpMailsender.sendOtpEmail(emailOtp.getEmail(), generatedOtp);
+		    	 otpServiceImpl.sendOtpEmail(emailOtp.getEmail(), generatedOtp);
+		    	 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Error While sending OTP",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
 			}
+		     return new ResponseEntity<ApiResponse>(new ApiResponse("OTP Sent Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 		 }
 		
 		 @PostMapping("/validate")
-		 public boolean validateOtp(@RequestBody EmailOtp emailOtp) {
-		     return otpService.validateOtp(emailOtp.getEmail(), emailOtp.getOtp());
+		 public ResponseEntity<ApiResponse> validateOtp(@RequestBody EmailOtp emailOtp) {
+			 
+		      if(otpService.validateOtp(emailOtp.getEmail(), emailOtp.getOtp())==1) {
+		    	  return new ResponseEntity<ApiResponse>(new ApiResponse("Validate Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK); 
+		      }
+		      else if(otpService.validateOtp(emailOtp.getEmail(), emailOtp.getOtp())==2) {
+		    	  return new ResponseEntity<ApiResponse>(new ApiResponse("Time Out",HttpStatus.NOT_ACCEPTABLE.value(),HttpStatus.NOT_ACCEPTABLE),HttpStatus.BAD_REQUEST);
+		      }
+		      return new ResponseEntity<ApiResponse>(new ApiResponse("Wrong OTP",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
 		 }
 	}
 

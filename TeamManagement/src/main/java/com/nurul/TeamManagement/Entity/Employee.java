@@ -3,6 +3,8 @@ package com.nurul.TeamManagement.Entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -14,61 +16,64 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
-	Integer id;
+	private Integer id;
 	
 	@Column(name = "First_Name")
-	String firstName;
+	private String firstName;
 	
 	@Column(name = "Last_Name")
-	String lastName;
+	 private String lastName;
 	
 	@Column(name = "Date_Of_Birth",nullable = false)
-	Date dob;
+	 private Date dob;
 	
 	@Column(name = "Gender")
-	String gender;
+	 private String gender;
 	
 	@Column(name = "Phone_Number",nullable = false)
-	String phnNumber;
+	 private String phnNumber;
 	
 	@Column(name = "Email",nullable = false,unique = true)
-	String email;
+	 private String email;
 	
 	@Column(name = "Hire_Date",nullable = false)
-	Date hireDate;
+	 private Date hireDate;
 	
 	@Column(name = "Job_Title",nullable = false)
-	String jobTitle;
+	 private String jobTitle;
 	
 	@Column(name = "DepartmentID")
-	Integer departmentId;
+	 private Integer departmentId;
 	
 	@Column(name = "AddressID")
-	Integer addressId;
+	 private Integer addressId;
 	
 	@Column(name = "Salary")
-	Float salary;
+	 private Float salary;
 	
 	@Column(name = "ManagerID")
-	Integer managerId;
+	 private Integer managerId;
 	
 	@Column(name = "Employment_Status")
-	String empStatus;
+	 private String empStatus;
 	
 	@Column(name = "Emergency_Contact_Name")
-	String emergencyContactName;
+	 private String emergencyContactName;
 	
 	@Column(name = "Emergency_Contact_Relationship")
-	String emergencyContactRelationship;
+	 private String emergencyContactRelationship;
 	
 	@Column(name = "Emergency_Contact_PhoneNumber")
-	String emergencyContactPhoneNumber;
+	 private String emergencyContactPhoneNumber;
 	
-	@Column(name = "PhotoURL")
-	String photoURL;
+	@Column(name = "Image")
+	@Lob
+	 private byte[] image;
+	
+	private transient MultipartFile imageFile;
 	
 	@Column(name = "Create_Time")
-	LocalDate createTime;
+	 private LocalDate createTime;
 
 	public Integer getId() {
 		return id;
@@ -206,13 +211,20 @@ public class Employee {
 		this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
 	}
 
-	public String getPhotoURL() {
-		return photoURL;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setPhotoURL(String photoURL) {
-		this.photoURL = photoURL;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
+	
+	public MultipartFile getImageFile() {
+        return imageFile;
+    }
+	public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
 
 	public LocalDate getCreateTime() {
 		return createTime;

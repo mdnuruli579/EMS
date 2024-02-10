@@ -1,6 +1,16 @@
 package com.nurul.TeamManagement.Services;
 import org.springframework.stereotype.Service;
 import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,14 +18,6 @@ import java.util.Map;
 public class OtpServiceImpl implements OtpService {
 	
 		private final Map<String, OtpData> otpDataMap = new HashMap<>();
-		
-		
-		/* private final JavaMailSender javaMailSender; */
-		
-		/*
-		 * @Autowired public OtpServiceImpl(JavaMailSender javaMailSender) {
-		 * this.javaMailSender = javaMailSender; }
-		 */
 
 		@Override
 		 public String generateOtp(String useremail) {
@@ -24,61 +26,58 @@ public class OtpServiceImpl implements OtpService {
 		     String generatedOtp = String.valueOf(otpValue);
 		     String email = useremail;
 		     otpDataMap.put(email, new OtpData(generatedOtp, System.currentTimeMillis() + 10 * 60 * 1000)); // 10 minutes validity
-		     System.out.println("Otp Generated "+generatedOtp);
 		     return generatedOtp;
 		 }
 		
-		 /*@Override
+		 @Override
 		 public void sendOtpEmail(String email, String otp){
 				
-				  Properties properties = new Properties(); properties.put("mail.smtp.auth",
-				  "true"); properties.put("mail.smtp.ssl.enable", "true");
+				  Properties properties = new Properties();
+				  properties.put("mail.smtp.auth","true"); 
+				  properties.put("mail.smtp.ssl.enable", "true");
 				  properties.put("mail.smtp.host", "smtp.gmail.com");
 				  properties.put("mail.smtp.port", "465");
-				  properties.put("mail.debug","true");
-				  
 				  Session session = Session.getInstance(properties, new Authenticator() {
 				  
 				  @Override protected PasswordAuthentication getPasswordAuthentication() {
-				  return new PasswordAuthentication("nurulemsindia@gmail.com", "Emsindia@2024"); }
+					  return new PasswordAuthentication("esmindia82@gmail.com", "dvgjbtjfablvxdhl");
+					  }
 				  });
 				 
 		     try {
 					
-					  Message message = new MimeMessage(session); message.setFrom(new InternetAddress("nurulemsindia@gmail.com"));
+					  MimeMessage message = new MimeMessage(session); message.setFrom(new InternetAddress("esmindia82@gmail.com"));
 					  message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(email));
 					  message.setSubject("OTP for Verification on EMS India");
-					  message.setText("Your OTP For Varication is: " +
-					  otp+"\nValid only for 10 minutes"); 
+					  message.setText("Welcome To Employee Management System India"
+					  		+ "\nYour OTP For Varication is: " +
+					  otp+
+					  "\nValid only for 10 minutes"); 
 					  Transport.send(message);
 					 
-					/*
-					 * MimeMessage message = javaMailSender.createMimeMessage(); MimeMessageHelper
-					 * helper = new MimeMessageHelper(message, true);
-					 * helper.setFrom("esmindia82@gmail.com"); helper.setTo(email);
-					 * helper.setSubject("OTP for Verification on EMS India");
-					 * helper.setText("Your OTP For Varication is: " +otp
-					 * +"\nValid only for 10 minutes"); javaMailSender.send(message);
-					 */
-		      /*   System.out.println("Mail sent");
+		         System.out.println("Mail sent");
 		     } catch (MessagingException e) {
 		         e.printStackTrace();
 		     }
 		 }
 		
 		@Override
-		public boolean validateOtp(String email, String userEnteredOtp) {
+		public Integer validateOtp(String email, String userEnteredOtp) {
 			OtpData otpData = otpDataMap.get(email);
 		
 		    if (otpData != null && otpData.getExpirationTime() > System.currentTimeMillis()) {
-		        // Compare the entered OTP with the stored OTP
-		        return userEnteredOtp.equals(otpData.getOtp());
+		    	if(userEnteredOtp.equals(otpData.getOtp())) {
+		    		return 1;
+		    	}
+		    	else {
+		    		return -1;
+		    	}
+		        
 		    } else {
-		        // OTP is either expired or not found
-		        return false;
+		        return 2;
 		    }
 		}
-		*/
+		
 		private static class OtpData {
 		    private final String otp;
 		    private final long expirationTime;
@@ -95,18 +94,6 @@ public class OtpServiceImpl implements OtpService {
 		    public long getExpirationTime() {
 		        return expirationTime;
 		    }
-		}
-
-		@Override
-		public void sendOtpEmail(String email, String otp) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public boolean validateOtp(String email, String userEnteredOtp) {
-			// TODO Auto-generated method stub
-			return false;
 		}
 }
 

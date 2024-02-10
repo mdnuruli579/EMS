@@ -1,3 +1,6 @@
+<div class="loader-overlay" *ngIf="spinner">
+  <div class="spinner"></div>
+</div>
 <div class="container mt-5">
     <button mat-raised-button routerLink="/add-employee" color="primary">Add Employee</button>
     <a mat-raised-button routerLink="/department" color="primary" id="department">Department</a>
@@ -14,10 +17,6 @@
     <ng-container matColumnDef="managerId">
       <th mat-header-cell class="col-header" *matHeaderCellDef> Manager ID</th>
       <td mat-cell *matCellDef="let element"> {{element.managerId}} </td>
-    </ng-container>
-    <ng-container matColumnDef="addressId">
-      <th mat-header-cell class="col-header" *matHeaderCellDef> Address ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.addressId}} </td>
     </ng-container>
     <ng-container matColumnDef="firstName">
       <th mat-header-cell class="col-header" *matHeaderCellDef> First Name </th>
@@ -53,7 +52,7 @@
             </button>
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="['id','departmentId','managerId','addressId','firstName','lastName','dob','email','phnNumber', 'action']"></tr>
-      <tr mat-row  class="mat-row" *matRowDef="let row; columns: ['id','departmentId','managerId','addressId','firstName','lastName','dob','email','phnNumber', 'action']"></tr>
+      <tr mat-header-row *matHeaderRowDef="['id','departmentId','managerId','firstName','lastName','dob','email','phnNumber', 'action']"></tr>
+      <tr mat-row  class="mat-row" *matRowDef="let row; columns: ['id','departmentId','managerId','firstName','lastName','dob','email','phnNumber', 'action']"></tr>
   </table>
  </div>

@@ -15,6 +15,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditEmployeeComponent implements OnInit{
   deptList:Data[]=[];
   mngrList:Data[]=[];
+  srcResult: any;
+  selectedImagePath: string='';
+  imgSizeError=false
   constructor(private employeeService:EmployeeService,
     private depServ:DepartmentService,
     private mngrService:ManagerService,
@@ -37,9 +40,10 @@ export class EditEmployeeComponent implements OnInit{
     emergencyContactName:'',
     emergencyContactRelationship:'',
     emergencyContactPhoneNumber:'',
-    photoURL:'',
+    imageFile:'',
     id:''
   };
+  spinner:boolean=false
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -49,8 +53,28 @@ export class EditEmployeeComponent implements OnInit{
       })
       ).subscribe();
   }
+  onFileSelected(): void {
+    const fileInput: any = document.getElementById('file');
+    const file = fileInput.files[0];
+    this.selectedImagePath = file.name;
+    const filesize=(file.size)/1024;
+    if(filesize>200){
+      this.imgSizeError=true;
+    }else{
+      this.imgSizeError=false;
+    }
+    if (file) {
+      this.formData.imageFile = file;
+    } else {
+      console.error('No file selected.');
+    }
+  }
   editEmployee(id:any):void{
     this.employeeService.viewEmployee(id).subscribe((res)=>{
+      this.spinner=true;
+      setTimeout(()=>{
+        this.spinner=false;
+      },1000)
       res.addressId=res.addressId.toString();
       this.formData=res;
       this.departmentList();
@@ -63,6 +87,7 @@ export class EditEmployeeComponent implements OnInit{
     this.formData.dob=this.utilityService.dateFormate(new Date(this.formData.dob));
     this.formData.hireDate=this.utilityService.dateFormate(new Date(this.formData.hireDate));
     this.employeeService.editEmployee(this.formData,this.formData.id).subscribe((response)=>{
+      console.log(response);
       if(response.status==200){
         this.snackBar.open(response.msg, 'Cancel', {
           duration: 5000,

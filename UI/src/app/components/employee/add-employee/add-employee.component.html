@@ -35,6 +35,7 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-6">
+                <mat-label>Gender</mat-label>
                 <mat-radio-group aria-label="Select an option" [(ngModel)]="formData.gender" [ngModelOptions]="{standalone: true}">
                     <mat-radio-button value="M" name="gender">Male</mat-radio-button>
                     <mat-radio-button value="F" name="gender">Female</mat-radio-button>
@@ -107,7 +108,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                 <mat-form-field class="employee-full-width">
                     <mat-label>Address</mat-label>
                     <mat-select [(ngModel)]="formData.addressId" name="addressId" [ngModelOptions]="{standalone: true}">
@@ -115,6 +116,18 @@
                       <mat-option value="1">Current Address</mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div> -->
+            <div class="col-sm-6">
+                <mat-label>Upload Image</mat-label>
+                <button type="button" mat-stroked-button id="filebtn" (click)="fileInput.click()">Upload Image</button>
+                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+                <div *ngIf="selectedImagePath">
+                    {{ selectedImagePath }}
+                </div>
+                <div class="text-danger">
+                    <small *ngIf="imgSizeError">Image Size Should be less than 200kb</small>
+                </div>
+                
             </div>
             <div class="col-sm-6">
                 <mat-form-field class="employee-full-width">

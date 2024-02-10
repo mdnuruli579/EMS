@@ -15,8 +15,13 @@ export class EmployeeService {
     return this.http.get<Data[]>(apiUrl);
   }
   addEmployee(data:any): Observable<any>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.apiUrl}/employee/add`, data,{ headers });
+    const formData = new FormData();
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+    return this.http.post<any>(`${this.apiUrl}/employee/add`, formData);
   }
   deleteEmployee(id:number): Observable<any> { 
     const apiUrl = `${this.apiUrl}/employee/delete/${id}`;
@@ -26,7 +31,12 @@ export class EmployeeService {
     return this.http.get<any>(`${this.apiUrl}/employee/detail/${id}`);
   }
   editEmployee(data:any,id:string): Observable<any>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<any>(`${this.apiUrl}/employee/update/${id}`,data,{headers});
+    const formData = new FormData();
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+    return this.http.put<any>(`${this.apiUrl}/employee/update/${id}`,formData);
   }
 }

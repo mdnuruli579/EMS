@@ -16,6 +16,7 @@ import { EditDepartmentComponent } from './edit-department/edit-department.compo
 })
 export class DepartmentComponent {
   dataList:Data[]=[];
+  spinner: boolean=false;
   constructor(private departmentService:DepartmentService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog){
@@ -67,8 +68,13 @@ export class DepartmentComponent {
   departmentList():void{
     this.departmentService.departmentList().subscribe(
       (data:Data[])=>{
+      if(data!=null){
+        this.spinner=true;
+        setTimeout(()=>{
+          this.spinner=false;
+        },1000)
       this.dataList=data;
-      console.log(this.dataList);
+      }
     },
     (err:any)=>{
       console.log(err);

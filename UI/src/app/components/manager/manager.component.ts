@@ -15,6 +15,7 @@ import { EditManagerComponent } from './edit-manager/edit-manager.component';
 })
 export class ManagerComponent {
   dataList:Data[]=[];
+  spinner: boolean=false;
   constructor(private managerService:ManagerService,
     private snackBar: MatSnackBar
     ,private dialog: MatDialog){
@@ -60,8 +61,13 @@ export class ManagerComponent {
   managerList():void{
     this.managerService.managerList().subscribe(
       (data:Data[])=>{
-      this.dataList=data;
-      console.log(this.dataList);
+      if(data!=null){
+        this.spinner=true;
+        setTimeout(()=>{
+          this.spinner=false;
+        },1000)
+        this.dataList=data;
+      }
     },
     (err:any)=>{
       console.log(err);

@@ -32,6 +32,7 @@ export interface EmployeeElement {
 })
 export class EmployeeComponent implements OnInit{
   dataList:Data[]=[];
+  spinner:boolean=false
   constructor(private employeeService:EmployeeService,private snackBar: MatSnackBar){
   }
   ngOnInit():void{
@@ -68,7 +69,13 @@ export class EmployeeComponent implements OnInit{
   employeeList():void{
     this.employeeService.employeeList().subscribe(
       (data:Data[])=>{
-      this.dataList=data;
+        this.spinner=true;
+      if(data!=null){
+        setTimeout(()=>{
+          this.spinner=false;
+        },1000)
+        this.dataList=data;
+      }
     },
     (err:any)=>{
       console.log(err);
