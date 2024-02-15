@@ -11,6 +11,8 @@ export class EmployeeService {
   private apiUrl=environment.apiUrl;
   constructor(private http:HttpClient) { }
   employeeList(): Observable<Data[]> {
+    //JSON server
+    // const apiUrl = `${this.apiUrl}/employee/`;
     const apiUrl = `${this.apiUrl}/employee/list`;
     return this.http.get<Data[]>(apiUrl);
   }
@@ -22,6 +24,8 @@ export class EmployeeService {
       }
     }
     return this.http.post<any>(`${this.apiUrl}/employee/add`, formData);
+    //JSON server
+    // return this.http.post<any>(`${this.apiUrl}/employee/`, data);
   }
   deleteEmployee(id:number): Observable<any> { 
     const apiUrl = `${this.apiUrl}/employee/delete/${id}`;

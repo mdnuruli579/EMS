@@ -12,6 +12,8 @@ export class ManagerService {
   constructor(private http:HttpClient) { }
   managerList(): Observable<Data[]> {
     const apiUrl = `${this.apiUrl}/manager/list`;
+    //JSON server
+    // const apiUrl = `${this.apiUrl}/manager/`;
     return this.http.get<Data[]>(apiUrl);
   }
   viewManager(id:string):Observable<any>{
@@ -19,6 +21,8 @@ export class ManagerService {
   }
   addManager(data:any): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // return this.http.post<any>(`${this.apiUrl}/manager/`, data,{ headers });
+    //JSON server
     return this.http.post<any>(`${this.apiUrl}/manager/add`, data,{ headers });
   }
   editManager(data:any,id:string): Observable<any>{

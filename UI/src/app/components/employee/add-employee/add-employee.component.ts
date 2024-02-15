@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { EmployeeService } from '../../../service/employee/employee.service';
 import { UtilityService } from '../../../service/utility.service';
 import { DepartmentService } from '../../../service/department/department.service';
 import { Data, Router } from '@angular/router';
 import { ManagerService } from '../../../service/manager/manager.service';
+import { FormControl, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-employee',
@@ -17,7 +18,9 @@ export class AddEmployeeComponent {
   mngrList:Data[]=[];
   selectedImagePath: string='';
   imgSizeError=false
-  constructor(private employeeservice:EmployeeService,private depServ:DepartmentService,
+  @ViewChild('createEmployee') createEmployee!: NgForm;
+  constructor(private employeeservice:EmployeeService,
+    private depServ:DepartmentService,
     private mngrService:ManagerService,
     private utilityService:UtilityService,
     private router: Router,
@@ -28,6 +31,7 @@ export class AddEmployeeComponent {
     this.departmentList();
     this.managerList();
   }
+  
   formData={
     firstName:'',
     lastName:'',
@@ -66,26 +70,30 @@ export class AddEmployeeComponent {
   submitForm(){
     this.formData.dob=this.utilityService.dateFormate(new Date(this.formData.dob));
     this.formData.hireDate=this.utilityService.dateFormate(new Date(this.formData.hireDate));
-    this.employeeservice.addEmployee(this.formData).subscribe((response:any)=>{
-      if(response.status==200){
-        this.snackBar.open(response.msg, 'Cancel', {
-          duration: 5000,
+    if(this.createEmployee.valid){
+      this.employeeservice.addEmployee(this.formData).subscribe((response:any)=>{
+        console.log(response);
+        if(response.status==200){
+          this.snackBar.open(response.msg, 'Cancel', {
+            duration: 5000,
+            panelClass: ['snackBarColor'],
+          });
+          this.router.navigate(['']);  
+        }
+        else{
+          this.snackBar.open(response.msg, 'Cancel', {
+            panelClass: ['snackBarColor'],
+          });
+        } 
+      },
+      (err)=>{
+        this.snackBar.open(err.error.error, 'Cancel', {
           panelClass: ['snackBarColor'],
         });
-        this.router.navigate(['']);  
-      }
-      else{
-        this.snackBar.open(response.msg, 'Cancel', {
-          panelClass: ['snackBarColor'],
-        });
-      }
-    },
-    (err)=>{
-      this.snackBar.open(err.error.msg, 'Cancel', {
-        panelClass: ['snackBarColor'],
+        console.log(err);
       });
-      console.log(err);
-    });
+    }
+    
   }
   departmentList():void{
     this.depServ.departmentList().subscribe((data:Data[])=>{

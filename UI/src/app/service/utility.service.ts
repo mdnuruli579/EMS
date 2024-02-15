@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
+
   constructor() { }
   dateFormate(date:Date): string {
     const year = date.getFullYear();
@@ -21,4 +21,27 @@ export class UtilityService {
     });
     return formValues;
   }
-}
+  employeeFormValidation():EmployeeForm{
+    const formData:EmployeeForm={
+      firstName:'',
+      lastName:'',
+      dob:'',
+      gender:'',
+      phnNumber:'',
+      email:'',
+      hireDate:'',
+      jobTitle:'',
+      departmentId:'',
+      addressId:'',
+      salary:'',
+      managerId:'',
+      empStatus:'',
+      emergencyContactName:'',
+      emergencyContactRelationship:'',
+      emergencyContactPhoneNumber:'',
+      imageFile:''
+    };
+    return formData;
+  }
+}import { EmployeeForm } from './FormInterface/employee-form';
+

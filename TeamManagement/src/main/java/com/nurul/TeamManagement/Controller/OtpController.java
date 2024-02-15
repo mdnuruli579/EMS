@@ -2,6 +2,7 @@ package com.nurul.TeamManagement.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.EmailOtp;
-import com.nurul.TeamManagement.Entity.Employee;
+import com.nurul.TeamManagement.Entity.Login;
+import com.nurul.TeamManagement.Services.LoginService;
 import com.nurul.TeamManagement.Services.OtpService;
 import com.nurul.TeamManagement.Services.OtpServiceImpl;
 
+	@CrossOrigin
 	@RestController
 	@RequestMapping("/otp")
 	public class OtpController {
+		
+		@Autowired
+		LoginService loginService;
 		
 		@Autowired
 		OtpServiceImpl otpServiceImpl;
@@ -27,10 +33,15 @@ import com.nurul.TeamManagement.Services.OtpServiceImpl;
 		     this.otpService = otpService;
 		 }
 		
+		 @CrossOrigin
 		 @PostMapping("/send")
 		 public ResponseEntity<ApiResponse> sendOtp(@RequestBody EmailOtp emailOtp) {
-		     String generatedOtp = otpService.generateOtp(emailOtp.getEmail());
+			 Login userAlready=loginService.getUser(emailOtp.getEmail());
 		     try {
+		    	 if(userAlready!=null) {
+					 return new ResponseEntity<ApiResponse>(new ApiResponse("Email Already Exsist",HttpStatus.ALREADY_REPORTED.value(),HttpStatus.ALREADY_REPORTED),HttpStatus.ALREADY_REPORTED);
+				 }
+		    	 String generatedOtp = otpService.generateOtp(emailOtp.getEmail());
 		    	 otpServiceImpl.sendOtpEmail(emailOtp.getEmail(), generatedOtp);
 		    	 
 			} catch (Exception e) {

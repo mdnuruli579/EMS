@@ -70,6 +70,7 @@ export class EmployeeComponent implements OnInit{
     this.employeeService.employeeList().subscribe(
       (data:Data[])=>{
         this.spinner=true;
+        console.log(data);
       if(data!=null){
         setTimeout(()=>{
           this.spinner=false;

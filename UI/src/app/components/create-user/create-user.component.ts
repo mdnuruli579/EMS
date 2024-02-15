@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../service/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UtilityService } from '../../service/utility.service';
+import { AuthService } from '../../service/Auth/auth.service';
 
 @Component({
   selector: 'app-create-user',
@@ -12,16 +13,28 @@ import { UtilityService } from '../../service/utility.service';
 })
 export class CreateUserComponent implements OnInit{
   registerForm!: FormGroup;
+  validOtp:boolean=false;
+  isgetOtp:boolean=false;
+  otpMsg:string="";
+  boolOtpMsg:boolean=false;
+  spinner:boolean=false;
+  openForm:boolean=false;
+  authForm={
+    email:'',
+    otp:''
+  }
   constructor(
     public dialogRef: MatDialogRef<CreateUserComponent>,
     private userService:UserService,
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
-    private utilityService:UtilityService
+    private utilityService:UtilityService,
+    private authService:AuthService
   ){}
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(11)]],
+      otp:['',[Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       cnfPassword: ['', Validators.required],
     }, { validators: this.passwordMatchValidator });
@@ -52,6 +65,50 @@ export class CreateUserComponent implements OnInit{
       console.log(err);
     });
   }
+  sendOtp():void{
+    const emailValue = this.registerForm.get('username')?.value;
+    this.authForm.email=emailValue;
+    this.spinner=true;
+    this.authService.sendOtp(this.authForm).subscribe((res:any)=>{
+      if(res.status==200){
+        this.isgetOtp=true;
+        this.boolOtpMsg=false;
+        this.otpMsg=res.msg;
+      }else if(res.status==208){
+        this.boolOtpMsg=true;
+        this.otpMsg=res.msg;
+      }
+      this.spinner=false;
+    },
+    (err)=>{
+      console.log(err);
+      this.boolOtpMsg=true;
+      this.otpMsg=err.error.msg;
+      this.spinner=false;
+    })
+  }
+  isvalidotp:boolean=false;
+  validotpmsg:string="";
+  ValidateOtp():void{
+    const otp = this.registerForm.get('otp')?.value;
+    this.authForm.otp=otp;
+    this.spinner=true;
+    this.authService.validateOtp(this.authForm).subscribe((res:any)=>{
+      if(res.status==200){
+        this.isvalidotp=false;
+        this.validOtp=false;
+        this.isgetOtp=true;
+        this.openForm=true;
+        this.validotpmsg=res.msg;
+      }
+      this.spinner=false;
+    },(err)=>{
+      this.validOtp=false;
+      this.isvalidotp=true;
+      this.validotpmsg=err.error.msg;
+      this.spinner=false;
+    })
+  };
   cancelPopup(): void {
     this.dialogRef.close();
   }

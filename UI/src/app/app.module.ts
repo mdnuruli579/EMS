@@ -87,7 +87,8 @@ import { PageNotFoundComponent } from './components/pageNotFound/page-not-found/
         CommonModule,
         MatOptionModule,
         MatToolbarModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ]
 })
 export class AppModule { }

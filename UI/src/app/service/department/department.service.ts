@@ -12,10 +12,14 @@ export class DepartmentService {
   constructor(private http:HttpClient) { }
   departmentList(): Observable<Data[]> {
     const apiUrl = `${this.apiUrl}/department/list`;
+    //JSON server
+    // const apiUrl = `${this.apiUrl}/department/`;
     return this.http.get<Data[]>(apiUrl);
   }
   addDepartment(data:any): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    //JSON server
+    // return this.http.post<any>(`${this.apiUrl}/department/`, data,{ headers });
     return this.http.post<any>(`${this.apiUrl}/department/add`, data,{ headers });
   }
   deleteDepartment(id:number): Observable<any> {
