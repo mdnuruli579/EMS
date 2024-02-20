@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Manager;
+import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.ManagerService;
 
 @CrossOrigin
@@ -25,6 +26,8 @@ import com.nurul.TeamManagement.Services.ManagerService;
 public class ManagerController {
 	@Autowired
 	ManagerService managerService;
+	@Autowired
+	EncryptDecrypt encryptDecrypt;
 	
 	@GetMapping("/list")
 	public ResponseEntity<List<Manager> >getAllManager(){
@@ -54,6 +57,7 @@ public class ManagerController {
 	public ResponseEntity<ApiResponse> AddManager(@RequestBody Manager manager) {
 			
 			try {
+				manager.setEmail(encryptDecrypt.encryptString(manager.getEmail()));
 				managerService.save(manager);
 			}
 			catch(Exception e) {
@@ -82,7 +86,7 @@ public class ManagerController {
 			if(newManager.getManagerName()!=null)
 				manager.setManagerName(newManager.getManagerName());
 			if(newManager.getEmail()!=null)
-				manager.setEmail(newManager.getEmail());
+				manager.setEmail(encryptDecrypt.encryptString(newManager.getEmail()));
 			if(newManager.getPhoneNumber()!=null)
 				manager.setPhoneNumber(newManager.getPhoneNumber());
 			managerService.save(manager);

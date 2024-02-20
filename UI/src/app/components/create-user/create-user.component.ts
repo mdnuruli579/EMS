@@ -62,6 +62,9 @@ export class CreateUserComponent implements OnInit{
       }
     },
     (err)=>{
+      this.snackBar.open(err.error.msg, 'Cancel', {
+        panelClass: ['snackBarColor'],
+      });
       console.log(err);
     });
   }

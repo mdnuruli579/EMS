@@ -36,18 +36,18 @@
           <div *ngIf="openForm">
             <mat-form-field class="full-width">
               <mat-label>Password</mat-label>
-              <input matInput placeholder="Enter Password" formControlName="password" >
-              <div *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+              <input matInput placeholder="Enter Password" formControlName="password" type="password">
+              <div class="text-danger" *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
                 Password is required.
               </div>
-              <div *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
+              <div class="text-danger" *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
                 Password must be at least 8 characters long.
               </div>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Confirm Password</mat-label>
-              <input matInput placeholder="Confirm Enter Password" id="cnfpass" formControlName="cnfPassword" >
-              <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('cnfPassword')?.touched">
+              <input matInput placeholder="Confirm Enter Password" id="cnfpass" formControlName="cnfPassword" type="password">
+              <div class="text-danger" *ngIf="registerForm.hasError('mismatch') && registerForm.get('cnfPassword')?.touched">
                 Passwords do not match.
               </div>
             </mat-form-field>

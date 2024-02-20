@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Department;
 import com.nurul.TeamManagement.Services.DepartmentService;
 
@@ -50,32 +51,32 @@ public class DepartmentController {
 		return new ResponseEntity<Department>(department,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public ResponseEntity<String> AddDepartment(@RequestBody Department department) {
+	public ResponseEntity<ApiResponse> AddDepartment(@RequestBody Department department) {
 			
 			try {
 				departmentService.save(department);
 			}
 			catch(Exception e) {
-				return new ResponseEntity<String>("Data does not saved",HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			return new ResponseEntity<String>("Data Saved Sucessfully",HttpStatus.OK);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Data Saved Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	 public ResponseEntity<String> deleteDepartmentById(@PathVariable("id") Integer id) {
+	 public ResponseEntity<ApiResponse> deleteDepartmentById(@PathVariable("id") Integer id) {
 		try {
 			Department department=departmentService.getDepartmentById(id);
 			if(department!=null) {
 				departmentService.deleteDepartmentById(id);
 			}
 			else {
-				return new ResponseEntity<String>("Department not found", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Department not found",HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
 			}
 		}
 		catch(Exception e) {
-			return new ResponseEntity<String>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR.value(),HttpStatus.INTERNAL_SERVER_ERROR),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	    return new ResponseEntity<String>("Deleted Sucessfully",HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(new ApiResponse("Deleted Sucessfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.OK);
 	 }
 
 	

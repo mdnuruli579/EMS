@@ -6,7 +6,7 @@ import { DepartmentService } from '../../../service/department/department.servic
 import { ManagerService } from '../../../service/manager/manager.service';
 import { UtilityService } from '../../../service/utility.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import * as base64 from 'base64-js';
 @Component({
   selector: 'app-edit-employee',
   templateUrl: './edit-employee.component.html',
@@ -33,7 +33,6 @@ export class EditEmployeeComponent implements OnInit{
     hireDate:'',
     jobTitle:'',
     departmentId:'',
-    addressId:'',
     salary:'',
     managerId:'',
     empStatus:'',
@@ -41,7 +40,9 @@ export class EditEmployeeComponent implements OnInit{
     emergencyContactRelationship:'',
     emergencyContactPhoneNumber:'',
     imageFile:'',
-    id:''
+    id:'',
+    image:'',
+    addressId:'1'
   };
   spinner:boolean=false
   ngOnInit(): void {
@@ -75,17 +76,22 @@ export class EditEmployeeComponent implements OnInit{
       setTimeout(()=>{
         this.spinner=false;
       },1000)
-      res.addressId=res.addressId.toString();
       this.formData=res;
+      console.log(this.formData);
       this.departmentList();
       this.managerList();
     },(err)=>{
       console.log(err);
     })
   }
+  getImageUrl(): string {
+    return 'data:image/jpeg;base64,' + this.formData.image;
+  }
   submitEditForm():void{
     this.formData.dob=this.utilityService.dateFormate(new Date(this.formData.dob));
     this.formData.hireDate=this.utilityService.dateFormate(new Date(this.formData.hireDate));
+    this.formData.addressId="1";
+    this.formData.imageFile = this.formData.image;
     this.employeeService.editEmployee(this.formData,this.formData.id).subscribe((response)=>{
       console.log(response);
       if(response.status==200){
@@ -100,6 +106,9 @@ export class EditEmployeeComponent implements OnInit{
         });
       }
     },(err)=>{
+      this.snackBar.open(err.error.error, 'Cancel', {
+        panelClass: ['snackBarColor'],
+      });
       console.log(err);
     })
   }

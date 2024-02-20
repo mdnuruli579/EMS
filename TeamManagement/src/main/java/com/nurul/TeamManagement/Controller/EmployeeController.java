@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Employee;
 import com.nurul.TeamManagement.Services.EmployeeService;
+import com.nurul.TeamManagement.Services.EncryptDecrypt;
 
 @CrossOrigin
 @RestController
@@ -30,6 +31,9 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	EncryptDecrypt encryptDecrypt;
 	
 	@GetMapping("/list")
 	public ResponseEntity<List<Employee> >getAllemployee(){
@@ -64,6 +68,7 @@ public class EmployeeController {
 		            byte[] imageData = file.getBytes();
 		            employee.setImage(imageData);
 		        }
+				employee.setEmail(encryptDecrypt.encryptString(employee.getEmail()));
 				employee.setCreateTime(LocalDate.now());
 				employeeService.save(employee);
 			}
@@ -101,8 +106,8 @@ public class EmployeeController {
 				employee.setDepartmentId(newEmployee.getDepartmentId());
 			if(newEmployee.getDob()!=null)
 				employee.setDob(newEmployee.getDob());
-			if(newEmployee.getEmail()!=null)
-				employee.setEmail(newEmployee.getEmail());
+//			if(newEmployee.getEmail()!=null)
+//				employee.setEmail(encryptDecrypt.encryptString(newEmployee.getEmail()));
 			if(newEmployee.getEmergencyContactName()!=null)
 				employee.setEmergencyContactName(newEmployee.getEmergencyContactName());
 			if(newEmployee.getEmergencyContactPhoneNumber()!=null)

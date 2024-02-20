@@ -23,6 +23,7 @@ export class EmployeeService {
         formData.append(key, data[key]);
       }
     }
+    console.log(formData)
     return this.http.post<any>(`${this.apiUrl}/employee/add`, formData);
     //JSON server
     // return this.http.post<any>(`${this.apiUrl}/employee/`, data);

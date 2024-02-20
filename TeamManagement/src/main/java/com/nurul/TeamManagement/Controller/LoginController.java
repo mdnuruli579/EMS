@@ -1,27 +1,26 @@
 package com.nurul.TeamManagement.Controller;
-
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.nurul.TeamManagement.Entity.ApiResponse;
-import com.nurul.TeamManagement.Entity.Employee;
 import com.nurul.TeamManagement.Entity.Login;
+import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.LoginService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/ems")
 public class LoginController {
-	@Autowired LoginService loginService;
+	@Autowired 
+	LoginService loginService;
+	
+	@Autowired
+	EncryptDecrypt encryptDecrypt;
 	
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse>UserLogin(@RequestBody Login user){
@@ -29,8 +28,9 @@ public class LoginController {
 		Login login=null;
 		try {
 			String usr=user.getUsername();
-			login=loginService.getUser(usr);
-			if(login.getUsername().equals(usr) && login.getPassword().equals(user.getPassword())) {
+			login=loginService.getUser(encryptDecrypt.encryptString(usr));
+			if(login.getUsername().equals(encryptDecrypt.encryptString(usr)) &&
+					login.getPassword().equals(encryptDecrypt.encryptString(user.getPassword()))) {
 				if(login.getStatus()!='A') {
 					return new ResponseEntity<ApiResponse>(new ApiResponse("Account Not Active",3000,
 							HttpStatus.UNAUTHORIZED),HttpStatus.NOT_FOUND);
@@ -55,6 +55,8 @@ public class LoginController {
 			
 			try {
 				user.setStatus('A');
+				user.setUsername(encryptDecrypt.encryptString(user.getUsername()));
+				user.setPassword(encryptDecrypt.encryptString(user.getPassword()));
 				loginService.save(user);
 			}
 			catch(Exception e) {

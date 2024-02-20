@@ -49,6 +49,7 @@ export class AddEmployeeComponent {
     emergencyContactName:'',
     emergencyContactRelationship:'',
     emergencyContactPhoneNumber:'',
+    image:'',
     imageFile:''
   };
   onFileSelected(): void {
