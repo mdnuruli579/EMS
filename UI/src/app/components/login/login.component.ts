@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit{
     password:''
   }
   msg!:string
-  islogin!:boolean
+  isloginerr!:boolean
   constructor(
     private authservice:AuthService,
     private router: Router,
@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit{
     private usrService:UserService,
     private snackBar: MatSnackBar,
     ){
-      this.islogin=false;
+      this.isloginerr=false;
       this.msg="";
     }
   ngOnInit(): void {
-    console.log('loading')
+    //console.log('loading')
   }
     
   userPopup():void{
@@ -45,26 +45,28 @@ export class LoginComponent implements OnInit{
     });
   }
   UserLogin():void{
-    this.usrService.userLogin(this.loginForm).subscribe((response)=>{
+    this.usrService.userLogin(this.loginForm).subscribe((response:any)=>{
+      //console.log(response);
       if(response.status==200){
         this.snackBar.open(response.msg, 'Cancel', {
           duration: 5000,
           panelClass: ['snackBarColor'],
         });
-        this.islogin=false;
-        this.authservice.setAuthenticationStatus(true);
-        this.router.navigate(['/dashboard']);
+        this.isloginerr=false;
+        localStorage.setItem('islogin','Y');
+        localStorage.setItem('userName',response.userName);
+        this.router.navigate(['employee']);
       }
       else{
         this.msg=response.msg;
-        this.islogin=true;
+        this.isloginerr=true;
         this.snackBar.open(response.msg, 'Cancel', {
           panelClass: ['snackBarColor'],
         });
       }
     },(err)=>{
       console.log(err);
-      this.islogin=true;
+      this.isloginerr=true;
       this.msg=err.error.msg;
       this.snackBar.open(this.msg, 'Cancel', {
         duration: 5000,

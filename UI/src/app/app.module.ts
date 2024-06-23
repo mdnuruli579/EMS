@@ -17,7 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './layout/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { UserService } from './service/user/user.service';
+import { authInterceptor } from './common/helper/auth.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,6 +31,14 @@ import { HttpClientModule } from '@angular/common/http';
         DashboardComponent,
         SidebarComponent,
     ],
+    providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: authInterceptor,
+          multi: true
+        },
+        UserService
+      ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

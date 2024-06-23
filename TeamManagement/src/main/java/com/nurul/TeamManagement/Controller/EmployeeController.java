@@ -1,7 +1,8 @@
 package com.nurul.TeamManagement.Controller;
 import java.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +31,7 @@ import com.nurul.TeamManagement.Services.EncryptDecrypt;
 @RequestMapping("/employee")
 public class EmployeeController {
 	
+	
 	@Autowired
 	EmployeeService employeeService;
 	
@@ -36,11 +39,16 @@ public class EmployeeController {
 	EncryptDecrypt encryptDecrypt;
 	
 	@GetMapping("/list")
-	public ResponseEntity<List<Employee> >getAllemployee(){
+	public ResponseEntity<List<Employee> >getAllemployee(@RequestHeader("userName") String userName){
 		List<Employee> list=null;
 		
 		try {
-			list=employeeService.getAllEmployee();
+			if(!userName.isBlank() && !userName.isEmpty()) {
+				list=employeeService.getAllEmployeeByuserName(userName);
+			}else {
+				return new ResponseEntity<List<Employee> >(list,HttpStatus.FORBIDDEN);
+			}
+			 
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<Employee> >(list,HttpStatus.NOT_FOUND);
