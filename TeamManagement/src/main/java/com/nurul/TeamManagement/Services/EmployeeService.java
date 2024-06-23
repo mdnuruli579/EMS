@@ -29,14 +29,14 @@ public class EmployeeService {
 		Employee employee=this.employeeDao.findByEmail(email);
 		return employee;
 	}
-	public Employee getEmployeeByAddressId(Integer id){
-		Employee employee=this.employeeDao.findByAddressId(id);
-		return employee;
-	}
-	public Employee getEmployeeByDepartmentId(Integer id){
-		Employee employee=this.employeeDao.findByDepartmentId(id);
-		return employee;
-	}
+//	public Employee getEmployeeByAddressId(Integer id){
+//		Employee employee=this.employeeDao.findByAddressId(id);
+//		return employee;
+//	}
+//	public Employee getEmployeeByDepartmentId(Integer id){
+//		Employee employee=this.employeeDao.findByDepartmentId(id);
+//		return employee;
+//	}
 	public Employee getEmployeeByJobTitle(String title){
 		Employee employee=this.employeeDao.findByJobTitle(title);
 		return employee;

@@ -8,24 +8,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Address")
+@Table(name="ADDRESS")
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
 	Integer id;
 	
-	@Column(name="City")
+	@Column(name="CITY")
 	String city;
 	
-	@Column(name="State")
+	@Column(name="STATE")
 	String state;
 	
-	@Column(name="Country")
+	@Column(name="COUNTRY")
 	String country;
 	
-	@Column(name="Pin")
-	String pin;
+	@Column(name="PIN")
+	Long pin;
+	
+	@Column(name="EMP_ID")
+	Long empId;
 
 	public Integer getId() {
 		return id;
@@ -59,13 +62,22 @@ public class Address {
 		this.country = country;
 	}
 
-	public String getPin() {
+	public Long getPin() {
 		return pin;
 	}
 
-	public void setPin(String pin) {
+	public void setPin(Long pin) {
 		this.pin = pin;
 	}
+
+	public Long getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Long empId) {
+		this.empId = empId;
+	}
+	
 	
 	
 

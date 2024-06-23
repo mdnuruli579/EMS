@@ -18,55 +18,55 @@ public class Employee {
 	@Column(name = "ID", unique = true)
 	private Integer id;
 	
-	@Column(name = "First_Name")
+	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
-	@Column(name = "Last_Name")
+	@Column(name = "LAST_NAME")
 	 private String lastName;
 	
-	@Column(name = "Date_Of_Birth",nullable = false)
-	 private Date dob;
+	@Column(name = "DATE_OF_BIRTH",nullable = false)
+	 private Long dob;
 	
-	@Column(name = "Gender")
+	@Column(name = "GENDER")
 	 private String gender;
 	
-	@Column(name = "Phone_Number",nullable = false)
+	@Column(name = "PHONE_NUMBER",nullable = false)
 	 private String phnNumber;
 	
-	@Column(name = "Email",nullable = false,unique = true)
+	@Column(name = "EMAIL",nullable = false,unique = true)
 	 private String email;
 	
-	@Column(name = "Hire_Date",nullable = false)
-	 private Date hireDate;
+	@Column(name = "HIRE_DATE",nullable = false)
+	 private Long hireDate;
 	
-	@Column(name = "Job_Title",nullable = false)
+	@Column(name = "JOB_TITLE",nullable = false)
 	 private String jobTitle;
 	
-	@Column(name = "DepartmentID")
-	 private Integer departmentId;
+	@Column(name = "DEPARTMENT_ID")
+	 private Long departmentID;
 	
-	@Column(name = "AddressID")
-	 private Integer addressId;
-	
-	@Column(name = "Salary")
+	@Column(name = "SALARY")
 	 private Float salary;
 	
-	@Column(name = "ManagerID")
-	 private Integer managerId;
+	@Column(name = "TO_REPORT")
+	 private Long toReport;
 	
-	@Column(name = "Employment_Status")
+	@Column(name = "EMPLOYMENT_STATUS")
 	 private String empStatus;
 	
-	@Column(name = "Emergency_Contact_Name")
+	@Column(name = "EMERGENCY_CONTACT_NAME")
 	 private String emergencyContactName;
 	
-	@Column(name = "Emergency_Contact_Relationship")
+	@Column(name = "EMERGENCY_CONTACT_RELATIONSHIP")
 	 private String emergencyContactRelationship;
 	
-	@Column(name = "Emergency_Contact_PhoneNumber")
+	@Column(name = "EMERGENCY_CONTACT_PHONENUMBER")
 	 private String emergencyContactPhoneNumber;
 	
-	@Column(name = "Image")
+	@Column(name = "USER_NAME")
+	 private String userName;
+	
+	@Column(name = "IMAGE")
 	@Lob
 	 private byte[] image;
 	
@@ -99,11 +99,11 @@ public class Employee {
 		this.lastName = lastName;
 	}
 
-	public Date getDob() {
+	public Long getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(Long dob) {
 		this.dob = dob;
 	}
 
@@ -131,11 +131,11 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Date getHireDate() {
+	public Long getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(Long hireDate) {
 		this.hireDate = hireDate;
 	}
 
@@ -146,21 +146,30 @@ public class Employee {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
+	
 
-	public Integer getDepartmentId() {
-		return departmentId;
+	public Long getDepartmentName() {
+		return departmentID;
 	}
 
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
+	public void setDepartmentName(Long departmentID) {
+		this.departmentID = departmentID;
 	}
 
-	public Integer getAddressId() {
-		return addressId;
+	public Long getAssignedManager() {
+		return toReport;
 	}
 
-	public void setAddressId(Integer addressId) {
-		this.addressId = addressId;
+	public void setAssignedManager(Long toReport) {
+		this.toReport = toReport;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Float getSalary() {
@@ -169,14 +178,6 @@ public class Employee {
 
 	public void setSalary(Float salary) {
 		this.salary = salary;
-	}
-
-	public Integer getManagerId() {
-		return managerId;
-	}
-
-	public void setManagerId(Integer managerId) {
-		this.managerId = managerId;
 	}
 
 	public String getEmpStatus() {

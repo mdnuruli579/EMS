@@ -7,18 +7,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Department")
+@Table(name="DEPARTMENT")
 public class Department {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
 	Integer id;
 	
-	@Column(name="DepartmentName")
+	@Column(name="DEPARTMENT_NAME")
 	String departmentName;
 	
-	@Column(name="Location")
+	@Column(name="LOCATION")
 	String location;
+	
+	@Column(name = "USER_NAME")
+	 private String userName;
 
 	public Integer getId() {
 		return id;
@@ -42,6 +45,14 @@ public class Department {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Login;
+import com.nurul.TeamManagement.Response.LoginResponse;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.LoginService;
 
@@ -23,7 +24,7 @@ public class LoginController {
 	EncryptDecrypt encryptDecrypt;
 	
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse>UserLogin(@RequestBody Login user){
+	public ResponseEntity<LoginResponse>UserLogin(@RequestBody Login user){
 		
 		Login login=null;
 		try {
@@ -32,22 +33,22 @@ public class LoginController {
 			if(login.getUsername().equals(encryptDecrypt.encryptString(usr)) &&
 					login.getPassword().equals(encryptDecrypt.encryptString(user.getPassword()))) {
 				if(login.getStatus()!='A') {
-					return new ResponseEntity<ApiResponse>(new ApiResponse("Account Not Active",3000,
-							HttpStatus.UNAUTHORIZED),HttpStatus.NOT_FOUND);
+					return new ResponseEntity<LoginResponse>(new LoginResponse("Account Not Active",3000,
+							HttpStatus.UNAUTHORIZED,""),HttpStatus.NOT_FOUND);
 				}
 				
 			}
 			else {
-				return new ResponseEntity<ApiResponse>(new ApiResponse("Invalid Password",HttpStatus.UNAUTHORIZED.value(),
-						HttpStatus.UNAUTHORIZED),HttpStatus.NOT_FOUND);
+				return new ResponseEntity<LoginResponse>(new LoginResponse("Invalid Password",HttpStatus.UNAUTHORIZED.value(),
+						HttpStatus.UNAUTHORIZED,""),HttpStatus.NOT_FOUND);
 			}
 		}
 		catch(Exception e){
-			return new ResponseEntity<ApiResponse>(new ApiResponse("User Not Found",HttpStatus.NOT_FOUND.value(),
-					HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
+			return new ResponseEntity<LoginResponse>(new LoginResponse("User Not Found",HttpStatus.NOT_FOUND.value(),
+					HttpStatus.NOT_FOUND,""),HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<ApiResponse>(new ApiResponse("Login Success",HttpStatus.OK.value(),
-				HttpStatus.OK),HttpStatus.OK);
+		return new ResponseEntity<LoginResponse>(new LoginResponse("Login Success",HttpStatus.OK.value(),
+				HttpStatus.OK,user.getUsername()),HttpStatus.OK);
 	}
 	
 	@PostMapping("/register")

@@ -100,10 +100,6 @@ public class EmployeeController {
 				employee.setFirstName(newEmployee.getFirstName());
 			if(newEmployee.getLastName()!=null)
 				employee.setLastName(newEmployee.getLastName());
-			if(newEmployee.getAddressId()!=null)
-				employee.setAddressId(newEmployee.getAddressId());
-			if(newEmployee.getDepartmentId()!=null)
-				employee.setDepartmentId(newEmployee.getDepartmentId());
 			if(newEmployee.getDob()!=null)
 				employee.setDob(newEmployee.getDob());
 //			if(newEmployee.getEmail()!=null)
@@ -130,8 +126,6 @@ public class EmployeeController {
 				employee.setJobTitle(newEmployee.getJobTitle());
 			if(newEmployee.getHireDate()!=null)
 				employee.setHireDate(newEmployee.getHireDate());
-			if(newEmployee.getManagerId()!=null)
-				employee.setManagerId(newEmployee.getManagerId());
 			employee.setCreateTime(LocalDate.now());
 			employeeService.save(employee);
 		}

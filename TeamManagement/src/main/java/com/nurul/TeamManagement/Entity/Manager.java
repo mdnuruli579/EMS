@@ -8,21 +8,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Manager")
+@Table(name="MANAGER")
 public class Manager {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
 	Integer id;
 	
-	@Column(name="ManagerName")
+	@Column(name="MANAGER_NAME")
 	String managerName;
 	
-	@Column(name="PhoneNumber")
+	@Column(name="PHONE_NUMBER")
 	String phoneNumber;
 	
-	@Column(name="Email",unique = true)
+	@Column(name="EMAIL",unique = true)
 	String email;
+	
+	@Column(name = "USER_NAME")
+	 private String userName;
 
 	public Integer getId() {
 		return id;
@@ -54,6 +57,14 @@ public class Manager {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
