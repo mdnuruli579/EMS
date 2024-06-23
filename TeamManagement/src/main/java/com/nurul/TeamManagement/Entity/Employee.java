@@ -72,7 +72,7 @@ public class Employee {
 	
 	private transient MultipartFile imageFile;
 	
-	@Column(name = "Create_Time")
+	@Column(name = "CREATE_TIME")
 	 private LocalDate createTime;
 
 	public Integer getId() {

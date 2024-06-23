@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './layout/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         AppComponent,
@@ -26,7 +27,7 @@ import { HeaderComponent } from './layout/header/header.component';
         CreateUserComponent,
         PageNotFoundComponent,
         DashboardComponent,
-        SidebarComponent
+        SidebarComponent,
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -39,7 +40,8 @@ import { HeaderComponent } from './layout/header/header.component';
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientModule
     ]
 })
 export class AppModule { }

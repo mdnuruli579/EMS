@@ -6,7 +6,6 @@ import { PageNotFoundComponent } from './components/pageNotFound/page-not-found/
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  //login
   {
     path:'login',
     component:LoginComponent
@@ -18,10 +17,17 @@ const routes: Routes = [
     pathMatch:"full"
   },
   {
-    path: 'employee', loadChildren:()=>import('./module/module-routing.module').then(m=>m.ModuleRoutingModule),
+    path: 'employee', loadChildren:()=>import('./module/employee/employee-routing.module').then(m=>m.EmployeeRoutingModule),
     canActivate: [AuthGuardService],
   },
-  //page not found
+  {
+    path: 'department', loadChildren:()=>import('./module/department/department-routing.module').then(m=>m.DepartmentRoutingModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'manager', loadChildren:()=>import('./module/manager/manager-routing.module').then(m=>m.ManagerRoutingModule),
+    canActivate: [AuthGuardService],
+  },
   {
     path: '**',
     component: PageNotFoundComponent

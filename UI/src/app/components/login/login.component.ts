@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../service/Auth/auth.service';
 import { Router } from '@angular/router';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NgForm } from '@angular/forms';
 import { UserService } from '../../service/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm={
     username:'',
     password:''
@@ -29,6 +28,9 @@ export class LoginComponent {
       this.islogin=false;
       this.msg="";
     }
+  ngOnInit(): void {
+    console.log('loading')
+  }
     
   userPopup():void{
     const dialogRef = this.dialog.open(CreateUserComponent, {

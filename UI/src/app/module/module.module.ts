@@ -5,7 +5,8 @@ import { ModuleRoutingModule } from './module-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     ModuleRoutingModule
