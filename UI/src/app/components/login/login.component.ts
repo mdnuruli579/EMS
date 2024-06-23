@@ -51,7 +51,7 @@ export class LoginComponent {
         });
         this.islogin=false;
         this.authservice.setAuthenticationStatus(true);
-        this.router.navigate(['']);
+        this.router.navigate(['/dashboard']);
       }
       else{
         this.msg=response.msg;
