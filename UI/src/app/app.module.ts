@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user/user.service';
 import { authInterceptor } from './common/helper/auth.interceptor';
 import { DateNumPipe } from './common/pipe/date-num.pipe';
+import { Number10DigitOnlyDirective } from './custom-directive/number-10-digit-only.directive';
 @NgModule({
     declarations: [
         AppComponent,
@@ -32,6 +33,7 @@ import { DateNumPipe } from './common/pipe/date-num.pipe';
         DashboardComponent,
         SidebarComponent,
         DateNumPipe,
+        Number10DigitOnlyDirective,
     ],
     providers: [
         {

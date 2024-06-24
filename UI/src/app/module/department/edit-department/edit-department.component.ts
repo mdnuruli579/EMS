@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentService } from '../../../service/department/department.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-department',
   templateUrl: './edit-department.component.html',
   styleUrl: './edit-department.component.css',
-  imports:[ReactiveFormsModule],
+  imports:[ReactiveFormsModule,CommonModule],
   standalone:true
 })
 export class EditDepartmentComponent implements OnInit{
@@ -22,8 +23,8 @@ export class EditDepartmentComponent implements OnInit{
   ngOnInit(): void {
     this.editDeptForm=this.fb.group({
       id:[''],
-      departmentName:[''],
-      location:[''],
+      departmentName:['',[Validators.required]],
+      location:['',[Validators.required]],
       userName:['']
     })
     const id = +this.route.snapshot.params['id'];

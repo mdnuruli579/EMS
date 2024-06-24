@@ -24,19 +24,29 @@
                         <form [formGroup]="editDeptForm" (ngSubmit)="onSubmit()">
                             <div class="row mb-3">
                                 <div class="col-sm-6">
-                                    <label for="departmentName" class="form-label">Department Name:</label>
-                                    <input type="text" class="form-control" formControlName="departmentName">
+                                    <label for="departmentName" class="form-label"><span class="estric">*</span> Department Name:</label>
+                                    <input type="text" class="form-control" formControlName="departmentName" placeholder="Enter Department Name">
+                                    <div class="text-danger">
+                                        <small *ngIf="editDeptForm.get('departmentName')?.hasError('required') && editDeptForm.get('departmentName')?.touched">
+                                            Department Name is required.
+                                        </small>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="location" class="form-label">Location:</label>
-                                    <input type="text" class="form-control" formControlName="location">
+                                    <label for="location" class="form-label"><span class="estric">*</span> Location:</label>
+                                    <input type="text" class="form-control" formControlName="location" placeholder="Enter Location">
+                                    <div class="text-danger">
+                                        <small *ngIf="editDeptForm.get('location')?.hasError('required') && editDeptForm.get('location')?.touched">
+                                            Location is required.
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <button class="btn btn-secondary w-100" type="submit">
+                                    <button class="btn btn-primary w-100" type="submit" [disabled]="editDeptForm.invalid">
                                         Submit
                                     </button>
                                 </div>

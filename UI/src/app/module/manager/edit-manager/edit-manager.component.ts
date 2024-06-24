@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ManagerService } from '../../../service/manager/manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-manager',
   templateUrl: './edit-manager.component.html',
   styleUrl: './edit-manager.component.css',
-  imports:[ReactiveFormsModule],
+  imports:[ReactiveFormsModule,CommonModule],
   standalone:true
 })
 export class EditManagerComponent {
@@ -21,9 +22,10 @@ export class EditManagerComponent {
   ngOnInit(): void {
     this.editMngrForm=this.fb.group({
       id:[''],
-      managerName:[''],
-      phoneNumber:[''],
-      email:['']
+      managerName:['',[Validators.required]],
+      phoneNumber:['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
+      email:['',[Validators.required]],
+      userName:['']
     })
     const id = +this.route.snapshot.params['id'];
     this.getMngrDetail(id);
@@ -36,7 +38,8 @@ export class EditManagerComponent {
           id:data.id,
           managerName:data.managerName,
           phoneNumber:data.phoneNumber,
-          email:data.email
+          email:data.email,
+          userName:data.userName
         })
       }else{
         this.snackBar.open("Data Not Found", 'Cancel', {

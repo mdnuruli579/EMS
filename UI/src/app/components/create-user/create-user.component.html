@@ -2,7 +2,7 @@
   <div class="spinner"></div>
 </div>
 <div class="new-user-container">
-    <mat-card>
+    <mat-card> 
       <mat-card-header>
         <mat-card-title>Create A New Account</mat-card-title>
       </mat-card-header>
@@ -11,16 +11,13 @@
           <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Enter Your Email" id="username" formControlName="username">
-            <div *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched">
+            <div class="text-danger" *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched">
               Email is required.
-            </div>
-            <div *ngIf="registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched">
-              Email must be at least 11 characters long.
             </div>
           </mat-form-field>
           <small *ngIf="isgetOtp" class="text-success">{{otpMsg}}</small>
           <input matInput *ngIf="isgetOtp" placeholder="Enter OTP" id="otp" formControlName="otp">
-          <div *ngIf="registerForm.get('otp')?.hasError('required') && registerForm.get('otp')?.touched">
+          <div class="text-danger" *ngIf="registerForm.get('otp')?.hasError('required') && registerForm.get('otp')?.touched">
             Otp is required.
           </div>
           <small *ngIf="isvalidotp" class="text-danger">{{validotpmsg}}</small>

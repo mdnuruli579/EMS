@@ -26,23 +26,44 @@
                                 <div class="col-sm-6">
                                     <label for="managerName" class="form-label">Manager Name:</label>
                                     <input type="text" class="form-control" formControlName="managerName" placeholder="Enter Manager Name">
+                                    <div class="text-danger">
+                                        <small *ngIf="addMngrForm.get('managerName')?.hasError('required') && addMngrForm.get('managerName')?.touched">
+                                            Manager Name is required.
+                                        </small>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="phoneNumber" class="form-label">Contact Number:</label>
                                     <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Contact Number">
+                                    <div class="text-danger">
+                                        <small *ngIf="addMngrForm.get('phoneNumber')?.hasError('required') && addMngrForm.get('phoneNumber')?.touched">
+                                            Contact Number is required.
+                                        </small>
+                                        <small *ngIf="addMngrForm.get('phoneNumber')?.hasError('maxlength') && addMngrForm.get('phoneNumber')?.touched">
+                                            Maximum Length Must Be 10 Digit.
+                                        </small>
+                                        <small *ngIf="addMngrForm.get('phoneNumber')?.hasError('minlength') && addMngrForm.get('phoneNumber')?.touched">
+                                            Minimum Length Must Be 10 Digit.
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email:</label>
                                     <input type="email" class="form-control" formControlName="email" placeholder="Enter Email">
+                                    <div class="text-danger">
+                                        <small *ngIf="addMngrForm.get('email')?.hasError('required') && addMngrForm.get('email')?.touched">
+                                            Email is required.
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <button class="btn btn-primary w-100" type="submit">
+                                    <button class="btn btn-primary w-100" type="submit"[disabled]="addMngrForm.invalid" >
                                         Submit
                                     </button>
                                 </div>

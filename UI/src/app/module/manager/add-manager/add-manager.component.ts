@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ManagerService } from '../../../service/manager/manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-manager',
   templateUrl: './add-manager.component.html',
   styleUrl: './add-manager.component.css',
-  imports:[ReactiveFormsModule],
+  imports:[ReactiveFormsModule,CommonModule],
   standalone:true
 })
 export class AddManagerComponent {
@@ -20,9 +21,9 @@ export class AddManagerComponent {
     private router: Router){}
   ngOnInit(): void {
     this.addMngrForm=this.fb.group({
-      managerName:[''],
-      phoneNumber:[''],
-      email:['']
+      managerName:['',[Validators.required]],
+      phoneNumber:['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
+      email:['',[Validators.required]]
     })
   }
   onSubmit():void{

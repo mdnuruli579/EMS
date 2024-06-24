@@ -19,6 +19,7 @@ export class CreateUserComponent implements OnInit{
   boolOtpMsg:boolean=false;
   spinner:boolean=false;
   openForm:boolean=false;
+  rightMail:boolean=false;
   authForm={
     email:'',
     otp:''
@@ -33,7 +34,7 @@ export class CreateUserComponent implements OnInit{
   ){}
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(11)]],
+      username: ['', [Validators.required]],
       otp:['',[Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       cnfPassword: ['', Validators.required],
@@ -72,23 +73,30 @@ export class CreateUserComponent implements OnInit{
     const emailValue = this.registerForm.get('username')?.value;
     this.authForm.email=emailValue;
     this.spinner=true;
-    this.authService.sendOtp(this.authForm).subscribe((res:any)=>{
-      if(res.status==200){
-        this.isgetOtp=true;
-        this.boolOtpMsg=false;
-        this.otpMsg=res.msg;
-      }else if(res.status==208){
+    if(this.authForm.email !=='' && this.authForm.email!==null){
+      this.authService.sendOtp(this.authForm).subscribe((res:any)=>{
+        if(res.status==200){
+          this.isgetOtp=true;
+          this.boolOtpMsg=false;
+          this.otpMsg=res.msg;
+          this.rightMail=true;
+        }else if(res.status==208){
+          this.boolOtpMsg=true;
+          this.otpMsg=res.msg;
+        }
+        this.spinner=false;
+      },
+      (err)=>{
+        console.log(err);
         this.boolOtpMsg=true;
-        this.otpMsg=res.msg;
-      }
+        this.otpMsg=err.error.msg;
+        this.spinner=false;
+      })
+    }else{
+      this.rightMail=false;
       this.spinner=false;
-    },
-    (err)=>{
-      console.log(err);
-      this.boolOtpMsg=true;
-      this.otpMsg=err.error.msg;
-      this.spinner=false;
-    })
+    }
+    
   }
   isvalidotp:boolean=false;
   validotpmsg:string="";

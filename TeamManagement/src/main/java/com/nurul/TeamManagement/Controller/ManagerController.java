@@ -21,6 +21,7 @@ import com.nurul.TeamManagement.Entity.Department;
 import com.nurul.TeamManagement.Entity.Manager;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.ManagerService;
+import com.nurul.TeamManagement.Services.MaskUnmask;
 
 @CrossOrigin
 @RestController
@@ -31,6 +32,9 @@ public class ManagerController {
 	@Autowired
 	EncryptDecrypt encryptDecrypt;
 	
+	@Autowired
+	MaskUnmask maskUnmask;
+	
 	@GetMapping("/list")
 	public ResponseEntity<List<Manager> >getAllManager(@RequestHeader("userName") String userName){
 		List<Manager> list=null;
@@ -39,6 +43,11 @@ public class ManagerController {
 			
 			if(!userName.isBlank() && !userName.isEmpty()) {
 				list=managerService.getAllManagerByuserName(userName);
+				for(int i=0;i<list.size();i++) {
+					String email=list.get(i).getEmail();
+					email=encryptDecrypt.decryptString(email);
+					list.get(i).setEmail(maskUnmask.mask(email));
+				}
 			}else {
 				return new ResponseEntity<List<Manager> >(list,HttpStatus.FORBIDDEN);
 			}
@@ -55,6 +64,9 @@ public class ManagerController {
 		try {
 			if(!userName.isBlank() && !userName.isEmpty()) {
 				manager=managerService.getManagerByIdAndUserName(id,userName);
+				String email=manager.getEmail();
+				email=encryptDecrypt.decryptString(email);
+				manager.setEmail(maskUnmask.mask(email));
 			}else {
 				return new ResponseEntity<Manager>(manager,HttpStatus.NOT_FOUND);
 			}
@@ -95,17 +107,15 @@ public class ManagerController {
 
 	
 	@PutMapping("/update")
-	public ResponseEntity<ApiResponse> Update(@PathVariable("id") Integer id,@RequestBody Manager newManager){
+	public ResponseEntity<ApiResponse> Update(@RequestBody Manager newManager){
 		Manager manager=null;
 		try {
+			int id=newManager.getId();
 			manager=managerService.getManagerById(id);
-			if(newManager.getManagerName()!=null)
-				manager.setManagerName(newManager.getManagerName());
-			if(newManager.getEmail()!=null)
-				manager.setEmail(encryptDecrypt.encryptString(newManager.getEmail()));
-			if(newManager.getPhoneNumber()!=null)
-				manager.setPhoneNumber(newManager.getPhoneNumber());
-			managerService.save(manager);
+			if(manager!=null) {
+				newManager.setEmail(manager.getEmail());
+				managerService.save(newManager);
+			}
 		}
 		catch(Exception e){
 			return new ResponseEntity<ApiResponse>(new ApiResponse("Error While Updating",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.INTERNAL_SERVER_ERROR);

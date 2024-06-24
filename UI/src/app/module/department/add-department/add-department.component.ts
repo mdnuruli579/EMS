@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DepartmentService } from '../../../service/department/department.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
   styleUrl: './add-department.component.css',
-  imports:[ReactiveFormsModule],
+  imports:[ReactiveFormsModule,CommonModule],
   standalone:true
 })
 export class AddDepartmentComponent implements OnInit{
@@ -19,8 +20,8 @@ export class AddDepartmentComponent implements OnInit{
     private router: Router){}
   ngOnInit(): void {
     this.addDeptForm=this.fb.group({
-      departmentName:[''],
-      location:[''],
+      departmentName:['',[Validators.required]],
+      location:['',[Validators.required]],
     })
   }
   onSubmit():void{

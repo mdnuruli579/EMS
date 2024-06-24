@@ -69,8 +69,8 @@
                               @for(emp of empList;track emp.id){
                               <tr>
                                  <td><a [routerLink]="['detail', emp.id]">{{emp.id}}</a></td>
-                                 <td>{{emp.departmentName}}</td>
-                                 <td>{{emp.assignedManager}}</td>
+                                 <td><a [routerLink]="['../','department','detail',emp.departmentName]">{{emp.departmentName}}</a></td>
+                                 <td><a [routerLink]="['../','manager','detail',emp.assignedManager]">{{emp.assignedManager}}</a></td>
                                  <td>{{emp.firstName}}</td>
                                  <td> {{emp.lastName}} </td>
                                  <td> {{emp.dob | dateStr}} </td>

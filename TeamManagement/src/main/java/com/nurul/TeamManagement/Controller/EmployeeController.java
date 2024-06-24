@@ -1,7 +1,5 @@
 package com.nurul.TeamManagement.Controller;
 import java.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,23 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Employee;
-import com.nurul.TeamManagement.Entity.Manager;
 import com.nurul.TeamManagement.Services.EmployeeService;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
+import com.nurul.TeamManagement.Services.MaskUnmask;
 
 @CrossOrigin
 @RestController
@@ -39,6 +33,10 @@ public class EmployeeController {
 	@Autowired
 	EncryptDecrypt encryptDecrypt;
 	
+	@Autowired
+	MaskUnmask maskUnmask;
+	
+	
 	@GetMapping("/list")
 	public ResponseEntity<List<Employee> >getAllemployee(@RequestHeader("userName") String userName){
 		List<Employee> list=null;
@@ -46,6 +44,11 @@ public class EmployeeController {
 		try {
 			if(!userName.isBlank() && !userName.isEmpty()) {
 				list=employeeService.getAllEmployeeByuserName(userName);
+				for(int i=0;i<list.size();i++) {
+					String email=list.get(i).getEmail();
+					email=encryptDecrypt.decryptString(email);
+					list.get(i).setEmail(maskUnmask.mask(email));
+				}
 			}else {
 				return new ResponseEntity<List<Employee> >(list,HttpStatus.FORBIDDEN);
 			}
@@ -63,6 +66,9 @@ public class EmployeeController {
 		try {
 			if(!userName.isBlank() && !userName.isEmpty()) {
 				employee=employeeService.getEmployeeByIdAndUserName(id,userName);
+				String email=employee.getEmail();
+				email=encryptDecrypt.decryptString(email);
+				employee.setEmail(maskUnmask.mask(email));
 			}else {
 				return new ResponseEntity<Employee>(employee,HttpStatus.NOT_FOUND);
 			}
@@ -112,7 +118,13 @@ public class EmployeeController {
 	public ResponseEntity<ApiResponse> UpdateEmployee(@RequestBody Employee newEmployee){
 		Employee employee=null;
 		try {
-			employeeService.save(employee);
+			int id=newEmployee.getId();
+			employee=employeeService.getEmployeeById(id);
+			if(employee!=null) {
+				newEmployee.setEmail(employee.getEmail());
+				newEmployee.setCreateTime(employee.getCreateTime());
+				employeeService.save(newEmployee);
+			}
 		}
 		catch(Exception e){
 			return new ResponseEntity<ApiResponse>(new ApiResponse("Error While Updating",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { EmployeeService } from "../../../service/employee/employee.service";
 import { UtilityService } from "../../../service/utility.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { DepartmentService } from "../../../service/department/department.service";
 import { CommonModule } from "@angular/common";
+import { ManagerService } from "../../../service/manager/manager.service";
 
 @Component({
   selector: 'app-edit-employee',
@@ -17,6 +18,7 @@ import { CommonModule } from "@angular/common";
 export class EditEmployeeComponent implements OnInit{
   editEmpForm!:FormGroup;
   departments!:any;
+  managers!:any;
   constructor(private fb:FormBuilder,
     private employeeService:EmployeeService,
     private util:UtilityService,
@@ -24,29 +26,32 @@ export class EditEmployeeComponent implements OnInit{
     private snackBar: MatSnackBar,
     private router: Router,
     private deptService:DepartmentService,
+    private mangerService:ManagerService,
   ){}
   ngOnInit(): void {
     this.editEmpForm=this.fb.group({
       id:[''],
-      firstName:[''],
-      lastName:[''],
-      dob:[''],
-      gender:[''],
-      phnNumber:[''],
-      email:[''],
-      hireDate:[''],
-      jobTitle:[''],
-      salary:[''],
+      firstName:['',[Validators.required,Validators.maxLength(50)]],
+      lastName:['',[Validators.required,Validators.maxLength(50)]],
+      dob:['',[Validators.required]],
+      gender:['',[Validators.required]],
+      phnNumber:['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
+      email:['',[Validators.required]],
+      hireDate:['',[Validators.required]],
+      jobTitle:['',[Validators.required]],
+      salary:['',[Validators.required]],
       emergencyContactName:[''],
       emergencyContactRelationship:[''],
-      emergencyContactPhoneNumber:[''],
-      departmentName:[''],
+      emergencyContactPhoneNumber:['',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]],
+      departmentName:['',[Validators.required]],
       assignedManager:[''],
+      empStatus:[''],
       userName:['']
     })
     const id = +this.route.snapshot.params['id'];
     this.getEmpDetail(id);
     this.getdeptList();
+    this.getmngrList();
   }
   getEmpDetail(id:number):void{
     this.employeeService.viewEmployee(id).subscribe((res:any)=>{
@@ -68,6 +73,7 @@ export class EditEmployeeComponent implements OnInit{
           emergencyContactPhoneNumber:data.emergencyContactPhoneNumber,
           departmentName:data.departmentName,
           assignedManager:data.assignedManager,
+          empStatus:data.empStatus,
           userName:data.userName
         })
       }else{
@@ -112,6 +118,11 @@ export class EditEmployeeComponent implements OnInit{
   getdeptList(){
     this.deptService.departmentList().subscribe((res:any)=>{
       this.departments=res;
+    })
+  }
+  getmngrList():void{
+    this.mangerService.managerList().subscribe((res:any)=>{
+      this.managers=res;
     })
   }
   onCancel(): void {

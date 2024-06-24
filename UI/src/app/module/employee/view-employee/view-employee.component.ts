@@ -5,22 +5,28 @@ import { EmployeeService } from "../../../service/employee/employee.service";
 import { UtilityService } from "../../../service/utility.service";
 import { CommonModule } from "@angular/common";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { DepartmentService } from "../../../service/department/department.service";
+import { ManagerService } from "../../../service/manager/manager.service";
 
 
 @Component({
   selector: 'app-view-employee',
   templateUrl: './view-employee.component.html',
   styleUrl: './view-employee.component.css',
-  imports:[RouterLink,ReactiveFormsModule],
+  imports:[RouterLink,ReactiveFormsModule,CommonModule],
   standalone:true
 })
 export class ViewEmployeeComponent implements OnInit{
   detailsEmpForm!:FormGroup;
+  departments!:any;
+  managers!:any; 
   constructor(private fb:FormBuilder,
     private employeeService:EmployeeService,
     private util:UtilityService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private deptService:DepartmentService,
+    private mangerService:ManagerService,
   ){}
   ngOnInit(): void {
     this.detailsEmpForm=this.fb.group({
@@ -42,6 +48,8 @@ export class ViewEmployeeComponent implements OnInit{
     })
     const id = +this.route.snapshot.params['id'];
     this.getEmpDetail(id);
+    this.getdeptList();
+    this.getmngrList();
   }
   getEmpDetail(id:number):void{
     this.employeeService.viewEmployee(id).subscribe((res:any)=>{
@@ -70,6 +78,16 @@ export class ViewEmployeeComponent implements OnInit{
           panelClass: ['snackBarColor'],
         });
       }
+    })
+  }
+  getdeptList():void{
+    this.deptService.departmentList().subscribe((res:any)=>{
+      this.departments=res;
+    })
+  }
+  getmngrList():void{
+    this.mangerService.managerList().subscribe((res:any)=>{
+      this.managers=res;
     })
   }
   onCancel(): void {
