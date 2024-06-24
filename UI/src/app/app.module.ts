@@ -20,6 +20,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user/user.service';
 import { authInterceptor } from './common/helper/auth.interceptor';
+import { DateNumPipe } from './common/pipe/date-num.pipe';
 @NgModule({
     declarations: [
         AppComponent,
@@ -30,6 +31,7 @@ import { authInterceptor } from './common/helper/auth.interceptor';
         PageNotFoundComponent,
         DashboardComponent,
         SidebarComponent,
+        DateNumPipe,
     ],
     providers: [
         {

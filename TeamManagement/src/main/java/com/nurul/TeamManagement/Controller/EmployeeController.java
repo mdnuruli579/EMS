@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Employee;
+import com.nurul.TeamManagement.Entity.Manager;
 import com.nurul.TeamManagement.Services.EmployeeService;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
 
@@ -56,11 +57,15 @@ public class EmployeeController {
 		return new ResponseEntity<List<Employee> >(list,HttpStatus.OK);
 	}
 	@GetMapping("/detail/{id}")
-	public ResponseEntity<Employee>Details(@PathVariable("id") Integer id){
+	public ResponseEntity<Employee>Details(@PathVariable("id") Integer id,@RequestHeader("userName") String userName){
 		
 		Employee employee=null;
 		try {
-			employee=employeeService.getEmployeeById(id);
+			if(!userName.isBlank() && !userName.isEmpty()) {
+				employee=employeeService.getEmployeeByIdAndUserName(id,userName);
+			}else {
+				return new ResponseEntity<Employee>(employee,HttpStatus.NOT_FOUND);
+			}
 		}
 		catch(Exception e){
 			return new ResponseEntity<Employee>(employee,HttpStatus.NOT_FOUND);
@@ -68,17 +73,22 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public ResponseEntity<ApiResponse> AddEmployee(@ModelAttribute Employee employee) {
+	public ResponseEntity<ApiResponse> AddEmployee(@RequestBody Employee employee,@RequestHeader("userName") String userName) {
 			
 			try {
-				MultipartFile file=employee.getImageFile();
-				if (file != null && !file.isEmpty()) {
-		            byte[] imageData = file.getBytes();
-		            employee.setImage(imageData);
-		        }
-				employee.setEmail(encryptDecrypt.encryptString(employee.getEmail()));
-				employee.setCreateTime(LocalDate.now());
-				employeeService.save(employee);
+//				MultipartFile file=employee.getImageFile();
+//				if (file != null && !file.isEmpty()) {
+//		            byte[] imageData = file.getBytes();
+//		            employee.setImage(imageData);
+//		        }
+				if(!userName.isBlank() && !userName.isEmpty()) {
+					employee.setUserName(userName);
+					employee.setEmail(encryptDecrypt.encryptString(employee.getEmail()));
+					employee.setCreateTime(LocalDate.now());
+					employeeService.save(employee);
+				}else {
+					return new ResponseEntity<ApiResponse>(new ApiResponse("Header Cannot be Blonk",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
+				}
 			}
 			catch(Exception e) {
 				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
@@ -98,43 +108,10 @@ public class EmployeeController {
 	 }
 
 	@CrossOrigin
-	@PutMapping("/update/{id}")
-	public ResponseEntity<ApiResponse> UpdateEmployee(@PathVariable("id") Integer id,@ModelAttribute Employee newEmployee){
+	@PutMapping("/update")
+	public ResponseEntity<ApiResponse> UpdateEmployee(@RequestBody Employee newEmployee){
 		Employee employee=null;
 		try {
-			MultipartFile file=newEmployee.getImageFile();
-			employee=employeeService.getEmployeeById(id);
-			if(newEmployee.getFirstName()!=null)
-				employee.setFirstName(newEmployee.getFirstName());
-			if(newEmployee.getLastName()!=null)
-				employee.setLastName(newEmployee.getLastName());
-			if(newEmployee.getDob()!=null)
-				employee.setDob(newEmployee.getDob());
-//			if(newEmployee.getEmail()!=null)
-//				employee.setEmail(encryptDecrypt.encryptString(newEmployee.getEmail()));
-			if(newEmployee.getEmergencyContactName()!=null)
-				employee.setEmergencyContactName(newEmployee.getEmergencyContactName());
-			if(newEmployee.getEmergencyContactPhoneNumber()!=null)
-				employee.setEmergencyContactPhoneNumber(newEmployee.getEmergencyContactPhoneNumber());
-			if(newEmployee.getEmergencyContactRelationship()!=null)
-				employee.setEmergencyContactRelationship(newEmployee.getEmergencyContactRelationship());
-			if(newEmployee.getEmpStatus()!=null)
-				employee.setEmpStatus(newEmployee.getEmpStatus());
-			if(newEmployee.getSalary()!=null)
-				employee.setSalary(newEmployee.getSalary());
-			if (file != null && !file.isEmpty()) {
-	            byte[] imageData = file.getBytes();
-	            employee.setImage(imageData);
-	        }
-			if(newEmployee.getGender()!=null)
-				employee.setGender(newEmployee.getGender());
-			if(newEmployee.getPhnNumber()!=null)
-				employee.setPhnNumber(newEmployee.getPhnNumber());
-			if(newEmployee.getJobTitle()!=null)
-				employee.setJobTitle(newEmployee.getJobTitle());
-			if(newEmployee.getHireDate()!=null)
-				employee.setHireDate(newEmployee.getHireDate());
-			employee.setCreateTime(LocalDate.now());
 			employeeService.save(employee);
 		}
 		catch(Exception e){

@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nurul.TeamManagement.Entity.ApiResponse;
+import com.nurul.TeamManagement.Entity.Department;
 import com.nurul.TeamManagement.Entity.Manager;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.ManagerService;
@@ -30,11 +32,16 @@ public class ManagerController {
 	EncryptDecrypt encryptDecrypt;
 	
 	@GetMapping("/list")
-	public ResponseEntity<List<Manager> >getAllManager(){
+	public ResponseEntity<List<Manager> >getAllManager(@RequestHeader("userName") String userName){
 		List<Manager> list=null;
 		
 		try {
-			list=managerService.getAllManager();
+			
+			if(!userName.isBlank() && !userName.isEmpty()) {
+				list=managerService.getAllManagerByuserName(userName);
+			}else {
+				return new ResponseEntity<List<Manager> >(list,HttpStatus.FORBIDDEN);
+			}
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<Manager> >(list,HttpStatus.NOT_FOUND);
@@ -42,11 +49,15 @@ public class ManagerController {
 		return new ResponseEntity<List<Manager> >(list,HttpStatus.OK);
 	}
 	@GetMapping("/detail/{id}")
-	public ResponseEntity<Manager>Details(@PathVariable("id") Integer id){
+	public ResponseEntity<Manager>Details(@PathVariable("id") Integer id,@RequestHeader("userName") String userName){
 		
 		Manager manager=null;
 		try {
-			manager=managerService.getManagerById(id);
+			if(!userName.isBlank() && !userName.isEmpty()) {
+				manager=managerService.getManagerByIdAndUserName(id,userName);
+			}else {
+				return new ResponseEntity<Manager>(manager,HttpStatus.NOT_FOUND);
+			}
 		}
 		catch(Exception e){
 			return new ResponseEntity<Manager>(manager,HttpStatus.NOT_FOUND);
@@ -54,11 +65,16 @@ public class ManagerController {
 		return new ResponseEntity<Manager>(manager,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public ResponseEntity<ApiResponse> AddManager(@RequestBody Manager manager) {
+	public ResponseEntity<ApiResponse> AddManager(@RequestBody Manager manager,@RequestHeader("userName") String userName) {
 			
 			try {
-				manager.setEmail(encryptDecrypt.encryptString(manager.getEmail()));
-				managerService.save(manager);
+				if(!userName.isBlank() && !userName.isEmpty()) {
+					manager.setUserName(userName);
+					manager.setEmail(encryptDecrypt.encryptString(manager.getEmail()));
+					managerService.save(manager);
+				}else {
+					return new ResponseEntity<ApiResponse>(new ApiResponse("Header Cannot be Blonk",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
+				}
 			}
 			catch(Exception e) {
 				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
@@ -78,7 +94,7 @@ public class ManagerController {
 	 }
 
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/update")
 	public ResponseEntity<ApiResponse> Update(@PathVariable("id") Integer id,@RequestBody Manager newManager){
 		Manager manager=null;
 		try {

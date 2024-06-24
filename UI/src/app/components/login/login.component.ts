@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit{
   }
   UserLogin():void{
     this.usrService.userLogin(this.loginForm).subscribe((response:any)=>{
-      //console.log(response);
       if(response.status==200){
         this.snackBar.open(response.msg, 'Cancel', {
           duration: 5000,
@@ -54,6 +53,7 @@ export class LoginComponent implements OnInit{
         });
         this.isloginerr=false;
         localStorage.setItem('islogin','Y');
+        this.authservice.setAuthenticationStatus(true);
         localStorage.setItem('userName',response.userName);
         this.router.navigate(['employee']);
       }

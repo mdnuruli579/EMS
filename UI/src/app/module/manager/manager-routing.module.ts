@@ -16,11 +16,11 @@ const routes: Routes = [
     component:AddManagerComponent
   },
   {
-    path:"detail:/id",
+    path:"detail/:id",
     component:ViewManagerComponent
   },
   {
-    path:"update",
+    path:"update/:id",
     component:EditManagerComponent
   }
 ];

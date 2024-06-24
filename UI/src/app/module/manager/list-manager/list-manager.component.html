@@ -23,10 +23,10 @@
                         <div class="col-sm-8">
                            <div class="formbtnsGrp">
 
-                              <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit mx-2">
+                              <!-- <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit mx-2">
                                     <i class="bi bi-file-earmark-arrow-up btn_icon"></i>export
-                                 </button></a>
-                              <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit" type="submit">
+                                 </button></a> -->
+                              <a [routerLink]="['add']" routerLinkActive="active"><button class="buttonNew_submit" type="submit">
                                     <i class="bi bi-bi bi-plus-lg btn_icon"></i>add new
                                  </button></a>
                            </div>
@@ -58,11 +58,15 @@
                               </tr>
                               @for(mngr of mngrList;track mngr.id){
                               <tr>
-                                 <td>{{mngr.id}}</td>
+                                 <td><a [routerLink]="['detail',mngr.id]">{{mngr.id}}</a></td>
                                  <td>{{mngr.managerName}}</td>
                                  <td>{{mngr.phoneNumber}}</td>
                                  <td>{{mngr.email}}</td>
-                                 <td><a >View</a></td>
+                                 <td>
+                                    <a [routerLink]="['detail',mngr.id]"><span class="fa fa-eye"></span></a>
+                                    &nbsp;&nbsp;
+                                    <a [routerLink]="['update',mngr.id]"><span class="fa fa-pencil"></span></a>
+                                 </td>
                               </tr>
                               }@empty {
                                  <tr>

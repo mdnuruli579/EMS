@@ -6,6 +6,7 @@ import { ListEmployeeComponent } from './list-employee/list-employee.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { ViewEmployeeComponent } from './view-employee/view-employee.component';
   ],
   imports: [
     CommonModule,
-    EmployeeRoutingModule
+    EmployeeRoutingModule,
   ]
 })
 export class EmployeeModule { }

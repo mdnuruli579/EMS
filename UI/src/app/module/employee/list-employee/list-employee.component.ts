@@ -21,7 +21,7 @@ export class ListEmployeeComponent implements OnInit{
   getEmpList():void{
     this.empListService.employeeList().subscribe((res:any)=>{
       this.empList=res;
-      console.log(this.empList);
+      //console.log(this.empList);
     })
   }
 }

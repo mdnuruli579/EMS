@@ -27,11 +27,11 @@ export class DepartmentService {
     const apiUrl = `${this.apiUrl}/department/delete/${id}`;
     return this.http.delete<any>(apiUrl);
   }
-  viewDepartment(id:string):Observable<any>{
+  viewDepartment(id:number):Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/department/detail/${id}`);
   }
-  editDepartment(data:any,id:string): Observable<any>{
+  editDepartment(data:any): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<any>(`${this.apiUrl}/department/update/${id}`,data,{headers});
+    return this.http.put<any>(`${this.apiUrl}/department/update`,data,{headers});
   }
 }

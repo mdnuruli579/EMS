@@ -1,10 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DepartmentService } from '../../../service/department/department.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
-  styleUrl: './add-department.component.css'
+  styleUrl: './add-department.component.css',
+  imports:[ReactiveFormsModule],
+  standalone:true
 })
-export class AddDepartmentComponent {
-
+export class AddDepartmentComponent implements OnInit{
+  addDeptForm!:FormGroup;
+  constructor(private fb:FormBuilder,
+    private deptService:DepartmentService,
+    private snackBar: MatSnackBar,
+    private router: Router){}
+  ngOnInit(): void {
+    this.addDeptForm=this.fb.group({
+      departmentName:[''],
+      location:[''],
+    })
+  }
+  onSubmit():void{
+    if(this.addDeptForm.valid){
+      this.deptService.addDepartment(this.addDeptForm.value).subscribe((res:any)=>{
+        if(res.status==200){
+          this.snackBar.open(res.msg, 'Cancel', {
+            duration: 5000,
+            panelClass: ['snackBarColor'],
+          });
+          this.addDeptForm.reset();
+          this.router.navigate(['department']);
+        }else{
+          this.snackBar.open(res.msg, 'Cancel', {
+            duration: 5000,
+            panelClass: ['snackBarColor'],
+          });
+          
+        }
+      })
+    }
+  }
+  onCancel():void{
+    window.history.back();
+  }
 }

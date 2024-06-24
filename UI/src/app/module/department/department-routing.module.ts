@@ -15,11 +15,11 @@ const routes: Routes = [
     component:AddDepartmentComponent
   },
   {
-    path:"detail:/id",
+    path:"detail/:id",
     component:ViewDepartmentComponent
   },
   {
-    path:"update",
+    path:"update/:id",
     component:EditDepartmentComponent
   }
 ];

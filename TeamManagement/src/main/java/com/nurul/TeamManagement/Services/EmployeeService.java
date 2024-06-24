@@ -3,6 +3,8 @@ import org.springframework.stereotype.Service;
 
 import com.nurul.TeamManagement.Dao.EmployeeDao;
 import com.nurul.TeamManagement.Entity.Employee;
+import com.nurul.TeamManagement.Entity.Manager;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class EmployeeService {
 	}
 	public Employee getEmployeeById(Integer id){
 		Employee employee=this.employeeDao.findById((int)id);
+		return employee;
+	}
+	public Employee getEmployeeByIdAndUserName(Integer id,String userName){
+		Employee employee=this.employeeDao.findByIdAndUserName(id, userName);
 		return employee;
 	}
 	public Employee getEmployeeByEmail(String email){

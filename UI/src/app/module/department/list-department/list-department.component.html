@@ -23,11 +23,11 @@
                         <div class="col-sm-8">
                            <div class="formbtnsGrp">
 
-                              <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit mx-2">
+                              <!-- <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit mx-2">
                                     <i class="bi bi-file-earmark-arrow-up btn_icon"></i>export
-                                 </button></a>
-                              <a ui-sref="" routerLinkActive="active"><button class="buttonNew_submit" type="submit">
-                                    <i class="bi bi-bi bi-plus-lg btn_icon"></i>add_new
+                                 </button></a> -->
+                              <a routerLinkActive="active" [routerLink]="['add']"><button class="buttonNew_submit" type="submit">
+                                    <i class="bi bi-bi bi-plus-lg btn_icon"></i>add new
                                  </button></a>
                            </div>
 
@@ -56,10 +56,14 @@
                               </tr>
                               @for(dept of deptList;track dept.id){
                               <tr>
-                                 <td>{{dept.id}}</td>
+                                 <td> <a [routerLink]="['detail', dept.id]">{{dept.id}}</a></td>
                                  <td>{{dept.departmentName}}</td>
                                  <td>{{dept.location}}</td>
-                                 <td><a >View</a></td>
+                                 <td>
+                                    <a [routerLink]="['detail', dept.id]"><span class="fa fa-eye"></span></a>
+                                    &nbsp;&nbsp;
+                                    <a [routerLink]="['update', dept.id]"><span class="fa fa-pencil"></span></a>
+                                 </td>
                               </tr>
                               }@empty {
                                  <tr>
