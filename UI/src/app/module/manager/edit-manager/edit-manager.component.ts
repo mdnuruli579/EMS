@@ -67,6 +67,8 @@ export class EditManagerComponent {
           
         }
       })
+    }else{
+      this.editMngrForm.markAllAsTouched();
     }
   }
   onCancel():void{

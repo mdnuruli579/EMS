@@ -18,6 +18,10 @@ export class UserService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.apiUrl}/ems/login`, data,{ headers });
   }
+  updatePassword(data:any): Observable<any>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiUrl}/ems/updPass`, data,{ headers });
+  }
   public setUserName(userName: string): void {
     this.userName = userName;
   }

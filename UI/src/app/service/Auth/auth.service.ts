@@ -25,4 +25,12 @@ export class AuthService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.apiUrl}/otp/validate`, userForm,{headers});
   }
+  forgotOtpSend(userForm:any):Observable<any>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiUrl}/otp/forgotOtpSend`, userForm,{headers});
+  }
+  validateForgotOtp(userForm:any):Observable<JSON>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiUrl}/otp/validateForgotOtp`, userForm,{headers});
+  }
 }

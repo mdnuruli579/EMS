@@ -66,6 +66,8 @@ export class EditDepartmentComponent implements OnInit{
           });
         }
       })
+    }else{
+      this.editDeptForm.markAllAsTouched();
     }
   }
   onCancel():void{

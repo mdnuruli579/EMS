@@ -44,6 +44,8 @@ export class AddManagerComponent {
           
         }
       })
+    }else{
+      this.addMngrForm.markAllAsTouched();
     }
   }
   onCancel():void{

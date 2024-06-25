@@ -113,6 +113,8 @@ export class EditEmployeeComponent implements OnInit{
           })
         }
       })
+    }else{
+      this.editEmpForm.markAllAsTouched();
     }
   }
   getdeptList(){

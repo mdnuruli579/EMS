@@ -42,6 +42,8 @@ export class AddDepartmentComponent implements OnInit{
           
         }
       })
+    }else{
+      this.addDeptForm.markAllAsTouched();
     }
   }
   onCancel():void{

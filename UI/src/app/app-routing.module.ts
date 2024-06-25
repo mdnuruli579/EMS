@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './components/pageNotFound/page-not-found/
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
+  { path: '',   redirectTo: '/login', pathMatch: 'full' },
   {
     path:'login',
     component:LoginComponent

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.nurul.TeamManagement.Entity.ApiResponse;
 import com.nurul.TeamManagement.Entity.Login;
+import com.nurul.TeamManagement.Model.ForgotPasswordModel;
 import com.nurul.TeamManagement.Response.LoginResponse;
 import com.nurul.TeamManagement.Services.EncryptDecrypt;
 import com.nurul.TeamManagement.Services.LoginService;
@@ -64,6 +65,23 @@ public class LoginController {
 				return new ResponseEntity<ApiResponse>(new ApiResponse("Data does not saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
 			}
 			return new ResponseEntity<ApiResponse>(new ApiResponse("New Account Created",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.CREATED);
+	}
+	@PostMapping("/updPass")
+	public ResponseEntity<ApiResponse> RegiserUser(@RequestBody ForgotPasswordModel updUser) {
+			Login user=loginService.getUser(encryptDecrypt.encryptString(updUser.getEmail()));
+			try {
+				if(user!=null) {
+					user.setPassword(encryptDecrypt.encryptString(updUser.getPassword()));
+					loginService.save(user);
+				}else {
+					return new ResponseEntity<ApiResponse>(new ApiResponse("User Does Not Exsist",HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
+				}
+				
+			}
+			catch(Exception e) {
+				return new ResponseEntity<ApiResponse>(new ApiResponse("Password Does Not Saved",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Password Updated Successfully",HttpStatus.OK.value(),HttpStatus.OK),HttpStatus.CREATED);
 	}
 
 }
